@@ -1,1 +1,0 @@
-$(["ui/entities/Edit"], {});

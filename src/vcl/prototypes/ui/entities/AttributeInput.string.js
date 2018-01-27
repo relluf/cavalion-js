@@ -1,3 +1,0 @@
-$(["./AttributeInput.@input"], {
-
-}, []);
