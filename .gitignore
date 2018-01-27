@@ -1,0 +1,4 @@
+.DS_Store
+.svn
+src/bower_components*
+src/node_modules*
