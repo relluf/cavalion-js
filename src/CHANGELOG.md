@@ -1,6 +1,7 @@
 ### 2018-02-02
-- Improving vcl/ui/Tree (vcl-ui/Tree, cvl-ui/Tree)
-- 
+- Improving vcl/ui/Tree: Vertical alignment, removed bottom padding for the selected item
+
+![](https://snag.gy/VRr5BK.jpg)
 
 ### 2018-01-26
 - Exploring Git
