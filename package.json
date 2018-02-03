@@ -1,0 +1,19 @@
+{
+  "name": "cavalion-js",
+  "version": "1.0.1",
+  "description": "Cavalion common JavaScript library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/relluf/cavalion-js.git"
+  },
+  "author": "ralph",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/relluf/cavalion-js/issues"
+  },
+  "homepage": "https://github.com/relluf/cavalion-js#readme"
+}

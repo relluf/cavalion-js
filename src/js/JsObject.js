@@ -64,7 +64,9 @@ define(function(require) {
 			},
 			override: function(obj, allowNoImpl) {
 				/** */
-				return override(this, obj, allowNoImpl);
+				var args = js.copy_args(arguments);
+				args.unshift(this);
+				return override.apply(window, args);
 			},
 			defineProperties: function() {
 				/** */

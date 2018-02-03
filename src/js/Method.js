@@ -92,18 +92,20 @@ define(["module", "./nameOf"], function(module, nameOf) {
 		} else {
 			var method = obj[methodName];
 
-			if(f[registry.override] !== undefined) {
-				throw new Error(String.format("%s.override: Supplied function already seems to " +
-						"override something (%n - %s)", module.id, obj, methodName), f);
+			if(f && f[registry.override] !== undefined) {
+				throw new Error(String.format("Supplied function already seems to " +
+						"override something (%n - %s)", obj, methodName), f);
 			}
 
 			if(typeof method !== "function") {
 				if(allowNoImpl !== true) {
-					throw new Error(String.format("%s.override: %s is not a method of %n",
-							module.id, methodName, obj));
+					throw new Error(String.format("%s is not a method of %n",
+							methodName, obj));
 				}
 				obj[methodName] = f;
-				f[registry.override] = function() {};
+				if(typeof f === "function") {
+					f[registry.override] = function() {};
+				}
 			} else {
 				var info;
 				if((info = method[registry.connect]) !== undefined) {
