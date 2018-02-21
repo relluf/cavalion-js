@@ -1,3 +1,29 @@
+### 2018-02-12
+- Fixing expanded/expandable bugs for vcl-ui/Node
+- Looking into performance of vcl-ui/Node and vcl-ui/List
+- Introducing **vcl-ui/Console.evaluate**
+- Adding onEvent style to Component.properties.handlers
+- 
+
+### 2018-02-07 - 1.0.2
+* **vcl/Factory** - Removed Method.trace-ing
+* **vcl-ui/List* ** - Worked on List-classes - not really improved, lacks speed
+* Fixed now longer functioning cavalion.org/databind
+* Enhancing `inter-component-ness` as shown below here on lines 81 and 82:
+
+> __vcl-comps/code/Navigator.js__:  
+![](https://snag.gy/RExQgN.jpg)
+
+>![](https://snag.gy/9JvVph.jpg)
+
+>![](https://snag.gy/zqGH8t.jpg)
+
+### 2018-02-04
+
+* "vcl-ui/List" == "vcl/ui/List"
+
+![](https://snag.gy/Go6mKe.jpg)
+
 ### 2018-02-02
 - Improving vcl/ui/Tree: Vertical alignment, removed bottom padding for the selected item
 

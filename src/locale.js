@@ -142,8 +142,7 @@ define(function(require) {
         	if(name === ".") {
         		debugger;
         	}
-        	
-        	
+
         	req([(window.locale_base || "locale/") + name], function(dict) {
         		locale[name] = js.mixIn(js.obj2kvp(dict.proto || {}), js.obj2kvp(dict));
         		onLoad(dict);
