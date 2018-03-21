@@ -1,3 +1,13 @@
+### 2018-02-28
+- Fixed a bug which caused `specializer_classes` not be applied on components. Eg. `devtools/Workspace<Veldoffice.ralph>` would only apply `devtools/Workspace<Veldoffice>`)
+- Fixed a bug where `vcl/Component.getImplicitBaseByUri()` would return duplicate bases
+
+
+### 2018-02-27
+- Introducing `Component.prototype.vars`
+- Minor fix for Component.query
+- Fix for vcl-ui/Node performance
+
 ### 2018-02-12
 - Fixing expanded/expandable bugs for vcl-ui/Node
 - Looking into performance of vcl-ui/Node and vcl-ui/List
