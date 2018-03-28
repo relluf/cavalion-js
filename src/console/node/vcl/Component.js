@@ -6,15 +6,6 @@ define(function(require) {
 	var Node = require("../../Node");
 	var js = require("js");
 
-	/*- FIXME Introduce some registration infra at Node */
-	js.override(Node, "create", function(value, key, NodeClass) {
-		if(NodeClass === undefined && value instanceof Component) {
-			/*- Yee, use the specific Component impl */
-			return new ComponentNode(value, key);
-		}
-		return js.inherited(this, arguments);
-	});
-
 	return (ComponentNode = ComponentNode(require, {
 
 		inherits: ObjectNode,
@@ -28,10 +19,24 @@ define(function(require) {
 			initializeValue: function(node) {
 				// node.innerHTML = String.format("%H<span class='uri'> - %H</span>",
 				// 		js.nameOf(this._value), this._value.getUri());
+				var root = this._value.isRootComponent() ? ":root" : "";
+				var selected = this._value.isSelected() ? ":selected" : "";
 				node.innerHTML = String.format(
-						"%H<span class='uri'> - %H</span>",
+						"%H<span class='uri'> - %H%H%H</span>",
 						js.nameOf(this._value), 
-						this._value._uri);
+						this._value._uri, root, selected);
+			}
+		},
+		statics: {
+			initialize: function() {
+				/*- FIXME Introduce some registration infra at Node */
+				js.override(Node, "create", function(value, key, NodeClass) {
+					if(NodeClass === undefined && value instanceof Component) {
+						/*- Yee, use the specific Component impl */
+						return new ComponentNode(value, key);
+					}
+					return js.inherited(this, arguments);
+				});
 			}
 		}
 	}));

@@ -1,7 +1,9 @@
+### 2018-03-21
+- Springly commit
+
 ### 2018-02-28
 - Fixed a bug which caused `specializer_classes` not be applied on components. Eg. `devtools/Workspace<Veldoffice.ralph>` would only apply `devtools/Workspace<Veldoffice>`)
 - Fixed a bug where `vcl/Component.getImplicitBaseByUri()` would return duplicate bases
-
 
 ### 2018-02-27
 - Introducing `Component.prototype.vars`
@@ -13,7 +15,6 @@
 - Looking into performance of vcl-ui/Node and vcl-ui/List
 - Introducing **vcl-ui/Console.evaluate**
 - Adding onEvent style to Component.properties.handlers
-- 
 
 ### 2018-02-07 - 1.0.2
 * **vcl/Factory** - Removed Method.trace-ing
