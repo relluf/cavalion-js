@@ -20,7 +20,7 @@ define(function(require) {
 				// node.innerHTML = String.format("%H<span class='uri'> - %H</span>",
 				// 		js.nameOf(this._value), this._value.getUri());
 				var root = this._value.isRootComponent() ? ":root" : "";
-				var selected = this._value.isSelected() ? ":selected" : "";
+				var selected = this._value.isSelected && this._value.isSelected() ? ":selected" : "";
 				node.innerHTML = String.format(
 						"%H<span class='uri'> - %H%H%H</span>",
 						js.nameOf(this._value), 

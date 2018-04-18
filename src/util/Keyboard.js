@@ -67,10 +67,8 @@ define(function () {
     };
 
     return {
-
-        /**
-         *
-         */
+    	// keys: specialKeys,
+    	
         getKeyNames: function () {
             var r;
             r = [];
@@ -79,10 +77,6 @@ define(function () {
             }
             return r;
         },
-
-        /**
-         *
-         */
         getKeyCode: function (keyName) {
             for (var k in specialKeys) {
                 if (specialKeys[k] === keyName) {
