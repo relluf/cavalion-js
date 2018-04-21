@@ -117,6 +117,7 @@ define(["module", "./nameOf"], function(module, nameOf) {
 				}
 			}
 		}
+		return obj;
 	}
 
 	/**
