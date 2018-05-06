@@ -49,7 +49,9 @@ define(function(require) {
 	 */
 	function namedFunction(name, f) {
 		var symbol;
-		var g = f;
+		var g = f, fname = f.name;
+		
+		f = f.toString();
 		name = name.split(".");
 		if(name.length > 1) {
 			symbol = name.shift();
@@ -59,11 +61,11 @@ define(function(require) {
 			name = name[0];
 		}
 
-		if(f.name === "") {
+		if(fname === "") {
 			// FIXME f.replace below should be a centralized method to replace illegal function name chars
-			f = "function " + name.split("/").pop().replace(/\./g, "_") + f.toString().substring("function".length + 1);
-		} else {
-			f = f.toString();
+			f = String.format("function %s()%s", 
+				name.split("/").pop().replace(/\./g, "_"),
+				f.substring(f.indexOf("{")));
 		}
 
 		try {
