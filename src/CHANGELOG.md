@@ -1,5 +1,7 @@
-### 2018-04-21
-- 
+### 2018-05-21
+- Fix for normalizing relative to /-paths
+- Fix for class names with dashes
+- Finetuning DocumentHook's wheelEvents
 
 ### 2018-03-21
 - Springly commit

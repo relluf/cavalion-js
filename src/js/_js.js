@@ -84,6 +84,11 @@ define(function(require) {
 			 * @param first
 			 * @returns
 			 */
+			if(uri.charAt(0) === "/") {
+				console.log(uri);
+				// return uri.substring(1);
+			} 
+			 
 			if(uri.charAt(0) !== ".") {
 				return uri;
 			}
