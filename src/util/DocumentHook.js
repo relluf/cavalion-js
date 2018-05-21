@@ -19,7 +19,7 @@ define(function(require) {
 			    "ontransitionend",
 			    "ontouchstart", "ontouchend", "ontouchmove", "ontap", "ondbltap", "ongesture",
 				"onclick", "ondblclick",
-				"onmousemove", "onmousedown", "onmouseup", "onmousewheel", "onmouseenter", "onmouseleave",
+				"onmousemove", "onmousedown", "onmouseup", "_onmousewheel", "onmouseenter", "onmouseleave",
 				"onkeydown", "onkeyup", "onkeypress",
 				"onfocus", "onblur",
 				"ondragstart", "ondragend", "ondragenter", "ondragleave", "ondragover", "ondrag", "ondrop"
@@ -189,7 +189,7 @@ evt.time = Date.now();
 		}
 	});
 
-	document.onwheel = function(evt) {};
+//	document.onwheel = function(evt) {};
 
 	/**
 	 *
@@ -239,12 +239,12 @@ evt.time = Date.now();
 	 */
 	function wheelWebkit(evt) {
         evt.mouseWheelDelta = evt.wheelDelta / 120;
-        document.onwheel(evt);
+        // document.onwheel(evt);
 	}
 
 	if(window.addEventListener) {
 		if(Browser.webkit) {
-			window.addEventListener('mousewheel', wheelWebkit, false);
+			window.addEventListener('mousewheel', wheelWebkit, {passive: true});
 		} else {
 			window.addEventListener('DOMMouseScroll', wheelMozilla, false);
 		}
