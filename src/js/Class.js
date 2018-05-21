@@ -64,12 +64,13 @@ define(function(require) {
 		if(fname === "") {
 			// FIXME f.replace below should be a centralized method to replace illegal function name chars
 			f = String.format("function %s()%s", 
-				name.split("/").pop().replace(/\./g, "_"),
+				name.split("/").pop().replace(/\-/g, "_").replace(/\./g, "_"),
 				f.substring(f.indexOf("{")));
 		}
 
 		try {
 			symbol = symbol.replace(/\//g, "_");
+			name = name.replace(/\-/g, "_");
 			return eval(String.format("(function() { var %s = {'%s': (%s)}; return %s['%s'];})();",
 					symbol, name, f, symbol, name));
 		} catch (e) {
