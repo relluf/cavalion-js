@@ -1,3 +1,7 @@
+### 2018-08-18 [1.0.4]
+- locale: Always looking for prototype
+- 
+
 ### 2018-05-21
 - Fix for normalizing relative to /-paths
 - Fix for class names with dashes
