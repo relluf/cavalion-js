@@ -141,7 +141,7 @@ define(function(require) {
         load: function (name, req, onLoad, config) {
         	var base = (window.locale_base || "locale/");
         	req([base + "prototype", base + name], function(proto, dict) {
-        		locale[name] = js.mixIn(js.obj2kvp(dict.proto || {}), js.obj2kvp(dict));
+        		locale[name] = js.mixIn(js.obj2kvp(proto || {}), js.obj2kvp(dict));
         		onLoad(dict);
         	});
         }

@@ -1,6 +1,5 @@
-### 2018-08-18 [1.0.4]
+### 2018-08-22 [1.0.6]
 - locale: Always looking for prototype
-- 
 
 ### 2018-05-21
 - Fix for normalizing relative to /-paths
