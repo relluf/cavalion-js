@@ -1,10 +1,10 @@
 define(function(require) {
 	
 	var js = require("js");
+	var locale_base = "locales/";
 
 	/*- Locale (computer software), a set of parameters that defines the user's language, region and any special variant preferences that the user wants to see in their user interface. Usually a locale identifier consists of at least a language identifier and a region identifier. -- https://en.wikipedia.org/wiki/Locale
 	*/
-	
 	/*- TODO
 	
 		require("locale!du-NL");
@@ -89,26 +89,7 @@ define(function(require) {
     	return r;
 	}
 
-	locale.loc = (location.search.split('locale=')[1]||'').split('&')[0];
-	locale.loc = locale.loc || localStorage.locale;
-	locale.loc = locale.loc || document.documentElement.locale;
-	locale.loc = locale.loc || document.documentElement.lang;
-	locale.loc = locale.loc || "en-US";
-    locale.switchTo = function(id) {
-    	var location = window.location.toString();
-    	id = window.escape(id);
-    	if(/\blocale\b/.test(location)) {
-    		location = location.replace(/\blocale\=[^&]*\b/, "locale=" + id);
-    	} else {
-    		if(location.indexOf("?") === -1) {
-    			location += "?";
-    		} else {
-    			location += "&";
-    		}
-    		location += ("locale=" + id);
-    	}
-    	window.location.href = location.replace(/#/g, "");
-    };
+	/* What to do with this? */
     locale.instancesOf = function(entity, options) {
     	options = (options && js.str2obj(options)) || {};
     	
@@ -126,8 +107,33 @@ define(function(require) {
 	    	
 	    return r;
     };
-
-	window.locale = locale;
+    
+	if(typeof window !== "undefined") {
+		locale.loc = (location.search.split('locale=')[1]||'').split('&')[0];
+		locale.loc = locale.loc || localStorage.locale;
+		locale.loc = locale.loc || document.documentElement.locale;
+		locale.loc = locale.loc || document.documentElement.lang;
+		locale.loc = locale.loc || "en-US";
+	    locale.switchTo = function(id) {
+	    	var location = window.location.toString();
+	    	id = window.escape(id);
+	    	if(/\blocale\b/.test(location)) {
+	    		location = location.replace(/\blocale\=[^&]*\b/, "locale=" + id);
+	    	} else {
+	    		if(location.indexOf("?") === -1) {
+	    			location += "?";
+	    		} else {
+	    			location += "&";
+	    		}
+	    		location += ("locale=" + id);
+	    	}
+	    	window.location.href = location.replace(/#/g, "");
+	    };
+		if(window.hasOwnProperty("locale_base")) {
+			locale_base = window.locale_base;
+		}
+		window.locale = locale;
+	}
 
 	return {
 		locale: locale,
@@ -139,7 +145,7 @@ define(function(require) {
 			};
 		},
         load: function (name, req, onLoad, config) {
-        	var base = (window.locale_base || "locale/");
+        	var base = (locale_base || "locale/");
         	req([base + "prototype", base + name], function(proto, dict) {
         		locale[name] = js.mixIn(js.obj2kvp(proto || {}), js.obj2kvp(dict));
         		onLoad(dict);
