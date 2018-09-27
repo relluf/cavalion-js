@@ -20,7 +20,6 @@ define(function(require) {
     		return "{{" + id + "}}";
     	}
     	
-    	
     	if(id instanceof RegExp) {
     		var m = [], match;
     		for(var k in locale[loc]) {
@@ -108,27 +107,12 @@ define(function(require) {
 	    return r;
     };
     
-	if(typeof window !== "undefined") {
+	if(typeof window !== "undefined" || typeof window.location !== "undefined") {
 		locale.loc = (location.search.split('locale=')[1]||'').split('&')[0];
 		locale.loc = locale.loc || localStorage.locale;
 		locale.loc = locale.loc || document.documentElement.locale;
 		locale.loc = locale.loc || document.documentElement.lang;
 		locale.loc = locale.loc || "en-US";
-	    locale.switchTo = function(id) {
-	    	var location = window.location.toString();
-	    	id = window.escape(id);
-	    	if(/\blocale\b/.test(location)) {
-	    		location = location.replace(/\blocale\=[^&]*\b/, "locale=" + id);
-	    	} else {
-	    		if(location.indexOf("?") === -1) {
-	    			location += "?";
-	    		} else {
-	    			location += "&";
-	    		}
-	    		location += ("locale=" + id);
-	    	}
-	    	window.location.href = location.replace(/#/g, "");
-	    };
 		if(window.hasOwnProperty("locale_base")) {
 			locale_base = window.locale_base;
 		}
@@ -145,8 +129,7 @@ define(function(require) {
 			};
 		},
         load: function (name, req, onLoad, config) {
-        	var base = (locale_base || "locale/");
-        	req([base + "prototype", base + name], function(proto, dict) {
+        	req([locale_base + "prototype", locale_base + name], function(proto, dict) {
         		locale[name] = js.mixIn(js.obj2kvp(proto || {}), js.obj2kvp(dict));
         		onLoad(dict);
         	});
