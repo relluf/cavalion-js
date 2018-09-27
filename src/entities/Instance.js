@@ -298,7 +298,6 @@ define(function(require) {
 				this._dirty = {};
 			}
 		}
-
 	}));
 
 });

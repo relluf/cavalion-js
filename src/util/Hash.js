@@ -169,15 +169,8 @@ define(function() {
     }
 
 	return {
-
-		/**
-		 *
-		 * @param str
-		 */
 		md5: function(str) {
 			return calcMD5(str);
 		}
-
 	};
-
 });
