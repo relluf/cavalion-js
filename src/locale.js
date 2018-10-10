@@ -12,7 +12,6 @@ define(function(require) {
 		locale.set("du-NL");
 	*/
 
-
 	function locale(id) {
     	var loc = locale.loc;//arguments.callee.loc;
     	
