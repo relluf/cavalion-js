@@ -26,7 +26,7 @@ define(function() {
 					});	
 	    		}
         	} else {
-        		console.log("<link rel=\"stylesheet\" href=\" + name + "\">", name));
+        		console.log("<link rel=\"stylesheet\" href=\"" + name + "\">");
         		onLoad(name);
         	}
         }
