@@ -26,7 +26,7 @@ define(function() {
 					});	
 	    		}
         	} else {
-        		console.log(String.format("<link rel=\"stylesheet\" href=\"%s\">", name));
+        		console.log("<link rel=\"stylesheet\" href=\" + name + "\">", name));
         		onLoad(name);
         	}
         }

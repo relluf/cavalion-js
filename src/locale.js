@@ -106,7 +106,7 @@ define(function(require) {
 	    return r;
     };
     
-	if(typeof window !== "undefined" || typeof window.location !== "undefined") {
+	if(typeof window !== "undefined" && typeof window.location !== "undefined") {
 		locale.loc = (location.search.split('locale=')[1]||'').split('&')[0];
 		locale.loc = locale.loc || localStorage.locale;
 		locale.loc = locale.loc || document.documentElement.locale;
