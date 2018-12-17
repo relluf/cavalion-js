@@ -8,6 +8,7 @@ define(function(require) {
 		statics: {
 			all: [],
 			runtime: {},
+			defaults: {},
 
 			load: function(name, parentRequire, load, config) {
 				/** @overrides http://requirejs.org/docs/plugins.html#apiload */
@@ -18,8 +19,8 @@ define(function(require) {
 					}
 					load(scaffold);
 				}, function() {
-					console.warn("scaffold.js not available, assuming the defaults defaults");
-					load(new Scaffold({}));
+					console.warn("scaffold.js not available, assuming Scaffold.defaults", Scaffold.defaults);
+					load(new Scaffold(Scaffold.defaults));
 				});
 			}
 		},
