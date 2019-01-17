@@ -12,7 +12,7 @@ define(function(require) {
     	var r = js.mixIn(criteria);
 
     	if(criteria && criteria.having) {
-    		r.having = JSON.stringify(criteria.having);
+    		r.having = criteria.having;//JSON.stringify(criteria.having);
     	}
     	
     	/*- Convert string usage */
