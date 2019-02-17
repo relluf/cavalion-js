@@ -42,17 +42,17 @@ define(function(require) {
 			 * @param defaultValue
 			 * @returns
 			 */
-			obj = obj || global;
+			var root = (obj = obj || global);
 			name = name.split(".");
 			for( var i = 0, l = name.length - 1; i < l; ++i) {
 				obj = obj[name[i]];
 				if(obj === null || obj === undefined || (typeof obj !== "object" && typeof obj !== "function")) {
-					return defaultValue !== undefined ? js.set(name.join("."), defaultValue, obj) : undefined;
+					return defaultValue !== undefined ? js.set(name.join("."), defaultValue, root) : undefined;
 				}
 			}
 
 			if(defaultValue !== undefined && obj[name[l]] === undefined) {
-				return js.set(name.join("."), defaultValue, obj);
+				return js.set(name.join("."), defaultValue, root);
 			}
 
 			return obj[name[l]];
