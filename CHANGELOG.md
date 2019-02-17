@@ -1,3 +1,6 @@
+### 2019-02-17 - 1.0.17
+- Fixed a bug in `js.get()` [OMG!]
+
 ### 2018-12 - 1.0.14
 - Fix in js/Scaffold (like a temp hack)
 - Fix in locale.js (for building cavalion-code)
