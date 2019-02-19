@@ -99,6 +99,8 @@ define(function(require) {
 			create: function() { /* stub, implemented in ./Printer */ },
 			click_expand: function(evt) {
 				evt = Event.fix(evt);
+				
+				if(evt.keyModifiers.length > 0) return;
 
 				var node = evt.target;
 				while(node !== null && node.parentNode !== this._node) {
@@ -114,6 +116,8 @@ define(function(require) {
 			click_toggle_expanded: function(evt) {
 				evt = Event.fix(evt);
 
+				if(evt.keyModifiers.length > 0) return;
+				
 				var node = evt.target;
 				while(node !== null && node.parentNode !== this._node) {
 					node = node.parentNode;
