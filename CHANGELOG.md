@@ -1,3 +1,6 @@
+### 2019-02-18 - 1.0.18
+- Improving console (in another dimension vcl:ui)
+
 ### 2019-02-17 - 1.0.17
 - Fixed a bug in `js.get()` [OMG!]
 
