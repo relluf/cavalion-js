@@ -41,7 +41,7 @@ define(function(require) {
 						delete this[k];
 					} else {// if(this.hasOwnProperty("@hashCode")) {
 						delete all[this['@hashCode']];
-						this['_@hashCode'] = -this['@hashCode'];
+						this['@hashCode'] = -this['@hashCode'];
 					}
 				}
 			},
