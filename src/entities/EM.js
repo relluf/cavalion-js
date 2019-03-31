@@ -184,7 +184,7 @@ define(function(require) {
 			var uri = String.format("%srest/entities/query", prefix || this.prefix);
 			criteria = criteria || {};
 
-			"where,groupBy,having,orderBy,count,start,limit".split(",").forEach(function(k) {
+			"where,filterBy,groupBy,having,orderBy,count,distinct,raw,start,limit".split(",").forEach(function(k) {
 				var value = criteria[k];
 				if(typeof value === "string") {
 					req[k] = value.split(",");
@@ -195,7 +195,7 @@ define(function(require) {
 
 			var me = this;
 			return Command.execute(uri,	params, req).addCallback(function(res) {
-					me.processQueryResult(res, req, params.unit);
+					me.processQueryResult(res, req, params.unit, criteria);
 					return res;
 				});
 		},
@@ -221,7 +221,7 @@ define(function(require) {
 		        contentType: "application/json",
 		        data: getViewData(from, attributes, criteria),
 		        success: function (res) {
-					me.processQueryResult(res, req, params.unit);
+					me.processQueryResult(res, req, params.unit, criteria);
 					d.callback(res);
 		        },
 		        error: function (res) {
@@ -230,7 +230,18 @@ define(function(require) {
 		    });
 		    return d;
 		},
-		processQueryResult: function(res, req, namespace) {
+		processQueryResult: function(res, req, namespace, criteria) {
+			// if(criteria.raw === true) {
+			// 	res.instances = [];
+			// 	res.tuples.forEach(function(tuple) {
+			// 		var obj = {};
+			// 		res.names.forEach(function(name, i) {
+			// 			obj[name] = tuple[i];
+			// 		});
+			// 		res.instances.push(obj);
+			// 	});
+			// 	return;
+			// }
 			if(res.names !== undefined) {
 				req.select = res.names;
 			}
