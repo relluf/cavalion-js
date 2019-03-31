@@ -85,7 +85,7 @@ define(function(require) {
 				delete this._time;
 			},
 			initializeKey: function(node) {
-				node.innerHTML = String.format("%H: ", this._key);
+				node.innerHTML = String.format("<i class='fa fa-caret-down'></i><i class='fa fa-caret-right'></i>%H: ", this._key);
 			},
 			initializeValue: function(node) {
 			},
