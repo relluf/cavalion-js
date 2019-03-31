@@ -1,3 +1,7 @@
+### 2019-03-31 [1.0.19]
+- Fixed a typo/bug, in destroy() method, wtf...
+- Added support for distinct and raw queries (entities/EM)
+
 ### 2019-02-18 [1.0.18]
 - Improving console (in another dimension vcl:ui)
 
