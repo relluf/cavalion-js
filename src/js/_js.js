@@ -14,7 +14,7 @@ define(function(require) {
 
     var JsObject = require("./JsObject");
     
-    var js_ctx = "[[js.ctx]]";
+    var js_ctx_key = "[[js.ctx]]";
 
 	return (js = {
 
