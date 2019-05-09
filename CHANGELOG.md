@@ -1,3 +1,6 @@
+### 2019-05-09  [1.0.20]
+- Introducing js.ctx and js.sf
+
 ### 2019-03-31 [1.0.19]
 - Fixed a typo/bug, in destroy() method, wtf...
 - Added support for distinct and raw queries (entities/EM)

@@ -13,6 +13,8 @@ define(function(require) {
 //	var js;
 
     var JsObject = require("./JsObject");
+    
+    var js_ctx = "[[js.ctx]]";
 
 	return (js = {
 
@@ -30,9 +32,15 @@ define(function(require) {
 		b: beautify,
 		m: minify,
 		sj: serialize.serialize,
+		sf: String.format,
 		nameOf: nameOf,
 		defineClass: defineClass,
 		mixIn: mixIn,
+		
+		ctx: function(obj, defaults) {
+			return obj.hasOwnProperty(js_ctx_key) ? obj[js_ctx_key] 
+				: obj[js_ctx_key] = (obj[js_ctx_key] || defaults || {});
+		},
 		
 		get: function(name, obj, defaultValue) {
 			/**
