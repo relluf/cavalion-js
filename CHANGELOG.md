@@ -1,3 +1,6 @@
+### 2019-05-18  [1.0.22]
+- Introducing locale.prefixed
+
 ### 2019-05-09  [1.0.21]
 - Introducing js.ctx and js.sf
 

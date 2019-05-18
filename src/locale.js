@@ -105,6 +105,11 @@ define(function(require) {
 	    	
 	    return r;
     };
+    locale.prefixed = function(prefix) {
+    	return function(id) {
+    		return locale(prefix + id);
+    	};
+    };
     
 	if(typeof window !== "undefined" && typeof window.location !== "undefined") {
 		locale.loc = (location.search.split('locale=')[1]||'').split('&')[0];
@@ -134,5 +139,4 @@ define(function(require) {
         	});
         }
 	};
-	
 });
