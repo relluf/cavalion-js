@@ -135,6 +135,8 @@ define(function(require) {
         load: function (name, req, onLoad, config) {
         	if(name.charAt(0) !== "/") {
         		name = locale_base + name;	
+        	} else {
+        		name = name.substring(1);
         	}
         	
         	req([js.up(name) + "/prototype", name], function(proto, dict) {
