@@ -133,7 +133,11 @@ define(function(require) {
 			};
 		},
         load: function (name, req, onLoad, config) {
-        	req([locale_base + "prototype", locale_base + name], function(proto, dict) {
+        	if(name.charAt(0) !== "/") {
+        		name = locale_base + name;	
+        	}
+        	
+        	req([js.up(name) + "/prototype", name], function(proto, dict) {
         		locale[name] = js.mixIn(js.obj2kvp(proto || {}), js.obj2kvp(dict));
         		onLoad(dict);
         	});

@@ -1,3 +1,6 @@
+### 2019-05-21  [1.0.23]
+- `locale!/` implemented in order to prevent locale_base
+
 ### 2019-05-18  [1.0.22]
 - Introducing locale.prefixed
 
