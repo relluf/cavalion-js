@@ -1,4 +1,4 @@
-### 2019-05-21  [1.0.24]
+### 2019-05-25  [1.0.26]
 - `locale!/` implemented in order to prevent locale_base
 
 ### 2019-05-18  [1.0.22]

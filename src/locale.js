@@ -133,14 +133,17 @@ define(function(require) {
 			};
 		},
         load: function (name, req, onLoad, config) {
-        	if(name.charAt(0) !== "/") {
+        	if(name.split("/").length === 1) {
         		name = locale_base + name;	
         	} else {
-        		name = name.substring(1);
+        		// name = name.substring(1);
         	}
         	
         	req([js.up(name) + "/prototype", name], function(proto, dict) {
-        		locale[name] = js.mixIn(js.obj2kvp(proto || {}), js.obj2kvp(dict));
+        		// group to language (nl_NL/en_UK/en_US/etc)
+        		name = name.split("/").pop();
+        		locale[name] = locale[name] || {};
+        		js.mixIn(locale[name], js.mixIn(js.obj2kvp(proto || {}) ,js.obj2kvp(dict)));
         		onLoad(dict);
         	});
         }
