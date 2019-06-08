@@ -1,3 +1,6 @@
+### 2019-06-07  [1.0.27]
+- Working on ES6 module support
+
 ### 2019-05-25  [1.0.26]
 - `locale!/` implemented in order to prevent locale_base
 
