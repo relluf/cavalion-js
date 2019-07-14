@@ -51,7 +51,8 @@ define(function(require) {
 			 * @returns
 			 */
 			var root = (obj = obj || global);
-			name = name.split(".");
+			if(typeof name === "string") name = name.split(".");
+			
 			for( var i = 0, l = name.length - 1; i < l; ++i) {
 				obj = obj[name[i]];
 				if(obj === null || obj === undefined || (typeof obj !== "object" && typeof obj !== "function")) {

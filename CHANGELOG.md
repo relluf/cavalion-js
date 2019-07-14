@@ -1,3 +1,6 @@
+### 2019-07-14  [1.0.28]
+- Enhancing `js.get()`, 1st argument can be an array of strings or a string which will be splitted by dot (`.`)
+
 ### 2019-06-07  [1.0.27]
 - Working on ES6 module support
 
