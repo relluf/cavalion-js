@@ -1,4 +1,8 @@
-### 2019-07-14  [1.0.28]
+### 2019-07-18  [1.0.30]
+- Making nl the default locale
+- Fighting the localStorage.locale bug, removed feature - apps should do this seperately (AND FOOLPROOF! ;-)
+
+### 2019-07-14  [1.0.29]
 - Enhancing `js.get()`, 1st argument can be an array of strings or a string which will be splitted by dot (`.`)
 
 ### 2019-06-07  [1.0.27]

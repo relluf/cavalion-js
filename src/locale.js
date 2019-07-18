@@ -113,10 +113,10 @@ define(function(require) {
     
 	if(typeof window !== "undefined" && typeof window.location !== "undefined") {
 		locale.loc = (location.search.split('locale=')[1]||'').split('&')[0];
-		locale.loc = locale.loc || localStorage.locale;
+		// locale.loc = locale.loc || localStorage.locale;
 		locale.loc = locale.loc || document.documentElement.locale;
 		locale.loc = locale.loc || document.documentElement.lang;
-		locale.loc = locale.loc || "en-US";
+		locale.loc = locale.loc || "nl";
 		if(window.hasOwnProperty("locale_base")) {
 			locale_base = window.locale_base;
 		}
