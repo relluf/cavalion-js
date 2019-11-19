@@ -1,3 +1,6 @@
+### 2019-10-22  [1.0.32]
+- Adding locale.slashDotRepl option (default: false)
+
 ### 2019-07-18  [1.0.30]
 - Making nl the default locale
 - Fighting the localStorage.locale bug, removed feature - apps should do this seperately (AND FOOLPROOF! ;-)

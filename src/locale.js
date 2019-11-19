@@ -31,7 +31,9 @@ define(function(require) {
     		return m;
     	}
     	
-    	id = id.replace(/\/\./g, "#");
+    	if(locale.slashDotRepl === true) {
+    		id = id.replace(/\/\./g, "#");
+    	}
 
     	function resolve(id) {
     		if(id === undefined) debugger;
