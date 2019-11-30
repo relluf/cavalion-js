@@ -116,7 +116,9 @@ define(function(require) {
 			click_toggle_expanded: function(evt) {
 				evt = Event.fix(evt);
 
-				if(evt.keyModifiers.length > 0) return;
+				if(evt.altKey !== true) {
+					if(evt.keyModifiers.length > 0) return;
+				} else if(evt.keyModifiers.length !== 1) return;
 				
 				var node = evt.target;
 				while(node !== null && node.parentNode !== this._node) {
