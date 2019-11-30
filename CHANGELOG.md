@@ -1,3 +1,6 @@
+### 2019-11-29  [1.0.33]
+- Fixed Alt+Click in console/Node
+
 ### 2019-10-22  [1.0.32]
 - Adding locale.slashDotRepl option (default: false)
 
