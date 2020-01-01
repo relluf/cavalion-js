@@ -8,25 +8,15 @@ define(function(require) {
 		return "" + this.getTime();
 	};
 
-	var keywords =
-		("break,class,catch,const,continue,default,delete," +
+	var keywords = ("break,class,catch,const,continue,default,delete," +
 			"do,else,export,for,function,if,import,in,instanceof," +
 			"implements,label,let,new,package,return,super,switch," +
-			"this,throw,try,typeof,var,void,while,with,yield").
-		split(",");
+			"this,throw,try,typeof,var,void,while,with,yield").split(",");
 
 	var serialize = {
-
-		/**
-		 *
-		 */
 		isKeyword: function(word) {
 			return keywords.indexOf(word) !== -1;
 		},
-
-		/**
-		 *
-		 */
 		keyNeedsEscape: function(key) {
 			var m = /^[A-Za-z_][A-Za-z_0-9]*$/.exec(key);
 			if(m === null) {
@@ -34,10 +24,6 @@ define(function(require) {
 			}
 			return serialize.isKeyword(key);
 		},
-
-		/**
-		 *
-		 */
 		serialize: function (obj, indent, objs, depth) {
 			var pushed = false;
 			try {
@@ -101,11 +87,11 @@ define(function(require) {
 			    if(obj.serializeJson) {
 			    	return obj.serializeJson();
 			    }
-			    var me = arguments.callee;
+			    var me = arguments.callee, res, val;
 			    if (obj instanceof Array) {
-			        var res = [];
+			        res = [];
 			        for (var i = 0, l = obj.length; i < l; ++i) {
-			            var val = me(obj[i], nextIndent, objs, depth);
+			            val = me(obj[i], nextIndent, objs, depth);
 			            if(val === CIRCULAR_TOO_DEEP || val === CIRCULAR_REFERENCE || val === TOO_DEEP) {
 			            	res.push(String.format("%s", val.__name));
 			            } else {

@@ -1,20 +1,16 @@
-define(function(require) {
-
-    var HexaQuad = require("js/defineClass");
+define(["js/defineClass"], function(HexaQuad) {
 
 	return (HexaQuad = HexaQuad(require, {
-
 		prototype: {
-
 			uid: null,
 			id: null,
 
-			/**
-			 *
-			 * @param uid
-			 * @param id
-			 */
 			constructor: function(uid, id) {
+				/**
+				 *
+				 * @param uid
+				 * @param id
+				 */
 			    if (id === undefined && typeof uid === "string") {
 			        this.fromString(uid);
 			    } else {
@@ -22,25 +18,23 @@ define(function(require) {
 			        this.id = parseInt(id, 10) || 0;
 				}
 			},
-
-			/**
-			 *
-			 * @param {Object} c
-			 */
 			_i: function(c) {
+				/**
+				 *
+				 * @param {Object} c
+				 */
 			    var idx = HexaQuad.characters.indexOf(c);
 			    if (idx !== -1) {
 			        return idx;
 			    }
 			    throw new Error(String.format("Illegal character '%s'", c));
 			},
-
-			/**
-			 *
-			 * @param {Object} value
-			 * @param {Object} len
-			 */
 			_format: function(value, len) {
+				/**
+				 *
+				 * @param {Object} value
+				 * @param {Object} len
+				 */
 			    var r = "";
 			    while (value > 0) {
 			        r = HexaQuad.characters.charAt(value % 64) + r;
@@ -51,12 +45,11 @@ define(function(require) {
 			    }
 			    return r;
 			},
-
-			/**
-			 *
-			 * @param {Object} s
-			 */
 			_atoi: function(s) {
+				/**
+				 *
+				 * @param {Object} s
+				 */
 			    var result = 0;
 			    var length = s.length;
 			    var c;
@@ -68,32 +61,26 @@ define(function(require) {
 			    return result;
 			},
 
-			/**
-			 *
-			 * @param {Object} hq
-			 */
 			fromString: function(hq) {
+				/**
+				 * @param {Object} hq
+				 */
 			    while (hq.length < 10) {
 			        hq = "0" + hq;
 			    }
 			    this.uid = this._atoi(hq.substring(0, 6));
 			    this.id = this._atoi(hq.substring(6, 10));
 			},
-
-			/**
-			 *
-			 */
 			toString: function() {
 			    return this._format(this.uid, 6) + this._format(this.id, 4);
 			},
-
-			/**
-			 * Returns the current value and increments
-			 *
-			 * @param size
-			 * @return
-			 */
 			inc: function(size) {
+				/**
+				 * Returns the current value and increments
+				 *
+				 * @param size
+				 * @return
+				 */
 				size = size || 1;
 
 				var s = this.toString();
@@ -108,12 +95,7 @@ define(function(require) {
 				}
 				return s;
 			}
-
 		},
-
-		/**
-		 *
-		 */
 		statics: {
 
 			MAX_ID: 8388607,//Math.pow(2, 23) - 1
@@ -125,6 +107,5 @@ define(function(require) {
 				return String.format(fmt || "_%d_%d", hq.uid, hq.id);
 			}
 		}
-
 	}));
 });

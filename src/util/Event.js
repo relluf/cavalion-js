@@ -1,7 +1,7 @@
-/**
- * Event.js - Taken from dojo
- */
 define(function(require) {
+	/**
+	 * Event.js - Taken from dojo
+	 */
 
 	var js = require("js");
 	var Browser = require("./Browser");
@@ -9,7 +9,6 @@ define(function(require) {
 	var Event = {
 
 		currentEvent: undefined,
-
 		keys: {
 			KEY_BACKSPACE: 8,
 			KEY_TAB: 9,
@@ -50,40 +49,37 @@ define(function(require) {
 			KEY_SCROLL_LOCK: 145
 		},
 
-		/**
-		 *
-		 * @param {Object} listener
-		 * @param {Object} curTarget
-		 */
 		callListener: function(listener, curTarget) {
+			/**
+			 *
+			 * @param {Object} listener
+			 * @param {Object} curTarget
+			 */
 			if (typeof listener !== "function") {
 				throw new Error("listener not a function: " + listener);
 			}
 			Event.currentEvent.currentTarget = curTarget;
 			return listener.call(curTarget, Event.currentEvent);
 		},
-
-		/**
-		 *
-		 */
 		stopPropagation: function() {
+			/**
+			 *
+			 */
 			Event.currentEvent.cancelBubble = true;
 		},
-
-		/**
-		 *
-		 */
 		preventDefault: function() {
+			/**
+			 *
+			 */
 			Event.currentEvent.returnValue = false;
 		},
-
-		/**
-		 * Creates a cross browser event object
-		 *
-		 * @param {Object} evt
-		 * @param {Object} sender
-		 */
 		fix: function(evt, sender) {
+			/**
+			 * Creates a cross browser event object
+			 *
+			 * @param {Object} evt
+			 * @param {Object} sender
+			 */
 			if (!evt && window.event) {
 				evt = js.mixIn({}, window.event);
 			}
@@ -135,12 +131,11 @@ define(function(require) {
 			evt.keyModifiers = this.getKeyModifiers(evt, true);
 			return evt;
 		},
-
-		/**
-		 *
-		 * @param evt
-		 */
 		getKeyModifiers: function(evt, metactrl) {
+			/**
+			 *
+			 * @param evt
+			 */
 			var modifiers = [];
 			if(evt.shiftKey) {
 				modifiers.push("shift");
@@ -165,14 +160,12 @@ define(function(require) {
 			//console.log(modifiers, evt.ctrlKey, evt.shiftKey, evt.altKey, evt.metaKey);
 			return modifiers;
 		},
-		
 		eventModifiersMatch: function(evt, modifiers) {
 			console.warn("Event.eventModifiersMatch has been deprecated, " + 
 				"use Event.modifiersMatch instead.");
 		    return this.modifiersMatch(this.getKeyModifiers(evt, 
 		    		modifiers.indexOf("metactrl") !== -1), modifiers);
 		},
-
 		modifiersMatch: function(evt, modifiers) {
 			if(!(evt instanceof window.Event)) {
 				console.warn("This particular usage has been deprecated");
@@ -182,7 +175,6 @@ define(function(require) {
 			var keymods = this.getKeyModifiers(evt, metactrl);
 			return keymods.sort().join(",") === modifiers.sort().join(",");
 		},
-		
 		modifiersMatchDeprecated: function(i1, i2) {
 			if((i1.indexOf("ctrl") !== -1 || i1.indexOf("meta") !== -1) && (i = i2.indexOf("metactrl")) !== -1) {
 				i2[i] = navigator.platform === "MacIntel" ? "meta" : "ctrl";

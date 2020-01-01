@@ -123,10 +123,6 @@ define(function(require) {
 		load: function(name, parentRequire, load, config) {
 			load(classMap[name] || Class.create(name));
 		},
-
-		/**
-		 *
-		 */
 		define: function(localRequire, classObj, overwrite) {
 			var name = localRequire("module").id;
 			var cls = classMap[name];
@@ -135,20 +131,9 @@ define(function(require) {
 			}
 			return cls.define(classObj);
 		},
-		
-		/**
-		 *
-		 */
 		reference: function(name) {
 			return classMap[name] || this.create(name);
 		},
-
-		/**
-		 *
-		 * @param name
-		 * @param f
-		 * @returns
-		 */
 		create: function(name, f) {
 			var cls = (classMap[name] = createConstructor(name));
 			var classObj = Object.create({}, {
@@ -247,10 +232,6 @@ define(function(require) {
 			return ctor;
 		},
 
-		/**
-		 *
-		 * @param obj
-		 */
 		getProperties: function(obj) {
 			if(Class.isConstructor(obj)) {
 				var classObj = Class.getClassObj(obj);
@@ -271,31 +252,14 @@ define(function(require) {
 			}
 			return {};
 		},
-
-		/**
-		 *
-		 * @param obj
-		 * @returns {Boolean}
-		 */
 		isConstructor: function(obj) {
 			return obj && obj[classObjKeyName] ? classMap[obj[classObjKeyName].name] === obj : false;
 		},
-
-		/**
-		 *
-		 * @param ctor
-		 */
 		getClassObj: function(ctor) {
 			if(Class.isConstructor(ctor)) {
 				return ctor[classObjKeyName];
 			}
 		},
-
-		/**
-		 *
-		 * @param ctor
-		 * @returns
-		 */
 		getSuperClass: function(ctor) {
 			if(Class.isConstructor(ctor)) {
 				return ctor[classObjKeyName].inherits;
