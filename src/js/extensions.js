@@ -95,6 +95,11 @@ define(function(require) {
 		before = arr.splice(0, newIndex);
 		return before.concat([item]).concat(arr);
 	};
+	
+	if(Array.prototype.each === undefined) {
+		// DUH!!! (2020-01-01)
+		Array.prototype.each = Array.prototype.forEach;
+	}
 
 	if (typeof String.prototype.endsWith !== 'function') {
 	    String.prototype.endsWith = function(suffix) {
