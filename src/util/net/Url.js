@@ -121,7 +121,7 @@ define(["require", "js/defineClass"], function(require, Url) {
 		},
 		statics: {
 			toUrlParamValueFactories: {},
-			obj2qs: function (obj) {
+			obj2qs: function (obj, include_q) {
 			/**
 			 * Converts the keys and values of an object to a query string which can be used in a url
 			 *
@@ -142,6 +142,11 @@ define(["require", "js/defineClass"], function(require, Url) {
 			            		("" + window.escape(v)).replace(/\+/g, "%2B")));
 			        }
 			    }
+			    
+			    if(include_q === true && str.length) {
+			    	return "?" + str.join("&");
+			    }
+			    
 			    return str.join("&");
 			},
 			registerToUrlParamValueFactory: function(cls, f) {
