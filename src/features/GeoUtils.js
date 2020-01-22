@@ -1,7 +1,5 @@
 define(function() {
-
 	return {
-	    
         dms: function(v, s) {
             /*- degrees,minutes, seconds */
             if (v < 0) {
@@ -17,15 +15,12 @@ define(function() {
             }
             return String.format("%d&#xb0;%d'%.3f\" %s", deg, min, v, s);
         },
-        
         lat2dms: function(lat) {
             return this.dms(lat, "NS");
         },
-        
         lng2dms: function(lng) {
             return this.dms(lng, "EW");
         },
-	    
 		pip: function (point, vs) {
 		    // ray-casting algorithm based on
 		    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
@@ -45,5 +40,4 @@ define(function() {
 		    return inside;
 		}
 	};
-
 });
