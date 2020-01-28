@@ -1,3 +1,6 @@
+### 2020-01-27 - 1.0.36
+- Introducing 'yell'
+
 ### 2020-01-22 - 1.0.35
 - Introducing parameter `include_q` for static `util/net/Url.obj2qs`
 
