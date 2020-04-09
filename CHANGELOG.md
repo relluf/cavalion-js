@@ -1,3 +1,6 @@
+### 2020-04-09 - 1.0.37
+- json.js: Fix for: Error: Loader plugin did not call the load callback in the build
+
 ### 2020-01-27 - 1.0.36
 - Introducing 'yell'
 
