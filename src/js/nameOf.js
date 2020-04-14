@@ -18,6 +18,10 @@ define(function() {
             return obj.toString();
 		}
 		
+		if(obj && typeof obj['@_name'] === "string") {
+			return obj['@_name'];
+		}
+		
 		if(obj && obj.constructor && obj.constructor.prototype.toString === Object.prototype.toString) {
 			return obj.constructor.name;
 		}
