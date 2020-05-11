@@ -86,6 +86,13 @@ define(function(require) {
         	// console.warn("undefined locale: " + id);
         	r = "{" + id + "}";
 		}
+		
+		if(typeof r === "function" && arguments.length > 1) {
+			var args = js.copy_args(arguments);
+			args.shift();
+			r = r.apply(this, args);
+		}
+		
     	return r;
 	}
 
