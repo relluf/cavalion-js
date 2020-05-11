@@ -26,7 +26,10 @@ define(["module", "./nameOf"], function(module, nameOf) {
 	 *            {Arguments}
 	 * @returns {Array}
 	 */
-	function copy_args(args) {
+	function copy_args(args, callee) {
+		if(callee === true) {
+			return js.mixIn(copy_args(args), {callee: args.callee});
+		}
 		return Array.prototype.slice.apply(args, [0]);
 	}
 
