@@ -15,6 +15,7 @@ define(function() {
 		}
 		
 		if(obj && obj.hasOwnProperty("toString") && obj.constructor !== Object) {
+			if(obj === window) return "Window";
             return obj.toString();
 		}
 		
