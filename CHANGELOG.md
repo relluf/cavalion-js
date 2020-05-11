@@ -1,3 +1,12 @@
+### 2020-04-28 - 1.0.39
+- Promise: New class definition pattern
+- Method.copy_args: Optionally mixin callee
+- specifically handle Window
+- locale: Paving the way for formatting
+
+### 2020-04-28
+- js.copy_args: callee optional added
+
 ### 2020-04-14 - 1.0.38
 - js/nameOf: adding `@_name` as default name attribute"
  
