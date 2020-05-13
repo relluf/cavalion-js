@@ -1,5 +1,5 @@
 define(function(require) {
-	
+
 	var js = require("js");
 	var locale_base = "locales/";
 
@@ -37,9 +37,18 @@ define(function(require) {
 
     	function resolve(id) {
     		if(id === undefined) debugger;
-    		/*- Find in the dictionary */
-	    	var r = window.locale[loc][id], i, nid, dash = id.indexOf("-") !== -1;
-	    	if(r === undefined && dash === true) {
+
+var began;    		
+if((began = locale.debug)) {
+	console.group("locale-resolve", id);
+}
+try {
+	
+			/*- Find in the dictionary */
+	    	var r = window.locale[loc][id], i, nid, dash = id.indexOf("-"), dot = id.indexOf(".");
+	    	var preferdash = (dot === -1 || dot > dash);
+	    	
+	    	if(r === undefined && dash !== -1 && preferdash) {
 				/*- Not found, insert star and try again become a star and try again 
 					eg. Project-customer.title --> *-customer.title */
 				i = 0, nid = id.split("-");
@@ -48,18 +57,18 @@ define(function(require) {
 				}
 				if(i < nid.length && nid[i] !== "*") {
 					nid[i] = "*";
-					r = resolve(nid.join("-"));
+					r = resolve(nid.join("-").replace(/\*\-\*/g, "*"));
 				}
 	    	}
-			if(r === undefined && id.indexOf(".") !== -1) {
-				if(dash === true) {
+			if(r === undefined && dot !== -1) {
+				if(dash !== -1 && preferdash) {
 					/*- Not found, let last part fall off and try again 
 						eg. Project-customer.title --> Project-customer */
 					nid = id.split("."); nid.pop();
 					r = resolve(nid.join("."));
 				} else {
 					/*- Not found, insert star and try again become a star and try again 
-						eg. Project-customer.title --> *-customer.title */
+						eg. customer.title --> *.title */
 					i = 0, nid = id.split(".");
 					while(nid[i] === "*" && i < nid.length - 1) {
 						i++;
@@ -74,9 +83,15 @@ define(function(require) {
 					}
 				}
 			}
-			/*- TODO Still not found, split by / delimiter and 
-				replace by star and try again */
+			
+	/*- TODO Still not found, split by / delimiter and replace by star and try again */
+	
 			return r;
+} finally {
+	if(began) {
+		console.groupEnd();
+	}
+}
     	}
     	
     	var r = resolve(id);
@@ -85,13 +100,17 @@ define(function(require) {
     		arr.push(id);
         	// console.warn("undefined locale: " + id);
         	r = "{" + id + "}";
+		} else if(typeof r === "function" && r.name === "locale") {
+			/* automagically call functions named locale */		
+			r = r.apply(this, arguments);
 		}
 		
-		if(typeof r === "function" && arguments.length > 1) {
-			var args = js.copy_args(arguments);
-			args.shift();
-			r = r.apply(this, args);
-		}
+		/* Paving the way for formatting? */
+		// if(typeof r === "function" && arguments.length > 1) {
+		// 	var args = js.copy_args(arguments);
+		// 	args.shift();
+		// 	r = r.apply(this, args);
+		// }
 		
     	return r;
 	}
@@ -115,8 +134,10 @@ define(function(require) {
 	    return r;
     };
     locale.prefixed = function(prefix) {
-    	return function(id) {
-    		return locale(prefix + id);
+    	return function(id/*, ... */) {
+    		var args = js.copy_args(arguments);
+    		args[0] = prefix + id;
+    		return locale.apply(this, args);
     	};
     };
     
@@ -130,6 +151,17 @@ define(function(require) {
 			locale_base = window.locale_base;
 		}
 		window.locale = locale;
+	}
+	
+	function unwrap(dict, v) {
+		/* unwrap arrays */
+		for(var k in dict) {
+			if(((v = dict[k]) instanceof Array)) {
+				console.log("!!! " + k, v[0]);
+				dict[k] = v[0];
+			}
+		}
+		return dict;
 	}
 
 	return {
@@ -152,7 +184,11 @@ define(function(require) {
         		// group to language (nl_NL/en_UK/en_US/etc)
         		name = name.split("/").pop();
         		locale[name] = locale[name] || {};
-        		js.mixIn(locale[name], js.mixIn(js.obj2kvp(proto || {}) ,js.obj2kvp(dict)));
+        		
+        		// unwrap arrays
+        		dict = unwrap(js.mixIn(js.obj2kvp(proto || {}), js.obj2kvp(dict)));
+        		
+        		js.mixIn(locale[name], dict);
         		onLoad(dict);
         	});
         }

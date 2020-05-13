@@ -1,7 +1,15 @@
-### 2020-04-28 - 1.0.39
-- Promise: New class definition pattern
+### 2020-05-13 - 1.0.41
+- Improving locale so that arrays are used to wrap object values (which otherwise would be parsed out)
+
+>> ![image](https://user-images.githubusercontent.com/686773/81868210-998b3b00-9537-11ea-9599-ca7eb57edfce.png?2x)
+
+### 2020-05-10 - 1.0.40
+- Promise: Featuring new class definition pattern
+
+>> ![image](https://user-images.githubusercontent.com/686773/81533306-97ed2780-932b-11ea-8289-b2837dfa753a.png?2x)
+
 - Method.copy_args: Optionally mixin callee
-- specifically handle Window
+- js.nameOf: Now specifically handling Window
 - locale: Paving the way for formatting
 
 ### 2020-04-28
