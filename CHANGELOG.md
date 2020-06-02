@@ -1,4 +1,7 @@
-### 2020-05-13 - 1.0.41
+### 2020-06-02 - 1.0.43
+- Having some trouble with the HexaQuad due to Vectorklic.app (hoe heeft het ooit kunnen werken? - werd dus niet (meer) gebruikt!)
+
+### 2020-05-13 - 1.0.42
 - Improving locale so that arrays are used to wrap object values (which otherwise would be parsed out)
 
 >> ![image](https://user-images.githubusercontent.com/686773/81868210-998b3b00-9537-11ea-9599-ca7eb57edfce.png?2x)
