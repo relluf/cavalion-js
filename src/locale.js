@@ -157,7 +157,6 @@ try {
 		/* unwrap arrays */
 		for(var k in dict) {
 			if(((v = dict[k]) instanceof Array)) {
-				console.log("!!! " + k, v[0]);
 				dict[k] = v[0];
 			}
 		}
