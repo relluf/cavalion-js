@@ -96,10 +96,10 @@ define(function(require) {
 		return before.concat([item]).concat(arr);
 	};
 	
-	if(Array.prototype.each === undefined) {
-		// DUH!!! (2020-01-01)
-		Array.prototype.each = Array.prototype.forEach;
-	}
+	// if(Array.prototype.each === undefined) {
+	// 	// DUH!!! (2020-01-01)
+	// 	Array.prototype.each = Array.prototype.forEach;
+	// }
 
 	if (typeof String.prototype.endsWith !== 'function') {
 	    String.prototype.endsWith = function(suffix) {

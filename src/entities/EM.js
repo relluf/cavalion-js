@@ -48,7 +48,7 @@ define(function(require) {
 		arrayOfAll: function(entity) {
 			var all = this.all(entity);
 			var arr = [];
-			for(var k in all) {
+			for(var k in all) if(all.hasOwnProperty(k)) {
 				arr.push(all[k]);
 			}
 			return arr;
