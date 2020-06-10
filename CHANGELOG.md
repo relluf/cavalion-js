@@ -1,5 +1,9 @@
-### 2020-06-02 - 1.0.43
+### 2020-06-10 - 1.0.45
+- Decided not to mess with Array's prototype (1.0.34 cancelled)
+
+### 2020-06-02 - 1.0.44
 - Having some trouble with the HexaQuad due to Vectorklic.app (hoe heeft het ooit kunnen werken? - werd dus niet (meer) gebruikt!)
+- Bugfix in EM.arrayOfAll
 
 ### 2020-05-13 - 1.0.42
 - Improving locale so that arrays are used to wrap object values (which otherwise would be parsed out)
@@ -28,11 +32,6 @@
 
 ### 2020-01-22 - 1.0.35
 - Introducing parameter `include_q` for static `util/net/Url.obj2qs`
-
-### 2020-01-07 - 1.0.34
-- Adding polyfill for Array.prototype.each (or is it an alias)
-
-	![image](https://user-images.githubusercontent.com/686773/71948593-1d05db80-3196-11ea-935a-2117a1b10ff3.png?2x)
 
 ### 2019-11-29  [1.0.33]
 - Fixed Alt+Click in console/Node
