@@ -1,3 +1,11 @@
+### 2020-06-16 - 1.0.47
+
+- Fixing `js.str2obj()` so it accepts just a key and it's value set to true - not sure whether the semi-colon should be obligated...
+
+### 2020-06-12 - 1.0.46
+
+- Enhancing `js.str2obj()` so it accepts just a key and it's value set to true - not sure whether the semi-colon should be obligated...
+
 ### 2020-06-10 - 1.0.45
 - Decided not to mess with Array's prototype (1.0.34 cancelled)
 

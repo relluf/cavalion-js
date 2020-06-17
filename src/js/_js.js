@@ -209,7 +209,7 @@ define(function(require) {
 					var key = String.trim(kv[0]);
 					var value = String.trim(kv[1]);
 					obj[key] = value;
-				} else {
+				} else if(attrs[i].length) {
 					obj[attrs[i]] = true;
 				}
 			}
