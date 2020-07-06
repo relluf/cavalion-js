@@ -1,3 +1,7 @@
+### 2020-07-05 - 1.0.48 `#local-changes`
+- Welcoming `ArrayFactory` to the family (_well yeah, hey, every drop counts and besides, now it's always there_)
+- Prefixed `locale` functions now return their prefix by calling without arguments
+
 ### 2020-06-16 - 1.0.47
 
 - Fixing `js.str2obj()` so it accepts just a key and it's value set to true - not sure whether the semi-colon should be obligated...
