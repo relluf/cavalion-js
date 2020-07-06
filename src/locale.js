@@ -135,6 +135,10 @@ try {
     };
     locale.prefixed = function(prefix) {
     	return function(id/*, ... */) {
+    		if(arguments.length === 0) {
+    			return prefix;
+    		}
+    		
     		var args = js.copy_args(arguments);
     		args[0] = prefix + id;
     		return locale.apply(this, args);
