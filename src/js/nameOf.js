@@ -1,6 +1,10 @@
 define(function() {
 
-	var methods = [];
+	var methods = [
+		function(obj) {
+			return obj && (obj.naam || obj.omschrijving || obj.code || obj.name || obj.description || obj.id);
+		}
+	];
 
 	/**
 	 *
