@@ -1,3 +1,9 @@
+### 2020-08-18 - 1.0.51
+- Adding Array.as
+
+### 2020-08-05 - 1.0.50
+- Adding default js.nameOf() method
+
 ### 2020-07-05 - 1.0.48 `#local-changes`
 - Welcoming `ArrayFactory` to the family (_well yeah, hey, every drop counts and besides, now it's always there_)
 - Prefixed `locale` functions now return their prefix by calling without arguments
