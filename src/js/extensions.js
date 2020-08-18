@@ -15,16 +15,12 @@ define(function(require) {
 		};
 	}());
 
-
 	Error.chain = function(e, cause) {
 		return mixIn(e, {
 			cause: cause
 		});
 	};
 
-	/**
-	 * Array.js
-	 */
 	if(Array.prototype.indexOf === undefined) {
 
 		/**
@@ -42,7 +38,6 @@ define(function(require) {
 		};
 		//console.debug("Array.prototype.indexOf declared");
 	}
-
 	if(Array.prototype.forEach === undefined) {
 		var thiz = this;
 
@@ -58,7 +53,6 @@ define(function(require) {
 		};
 		//console.debug("Array.prototype.forEach declared");
 	}
-
 	if(Array.prototype.remove === undefined) {
 
 		/**
@@ -81,15 +75,24 @@ define(function(require) {
 			Array.prototype.remove = remove;
 		}
 	}
-
-	/**
-	 *
-	 * @param array
-	 * @param oldIndex
-	 * @param newIndex
-	 * @returns
-	 */
+	
+	Array.as = function(arrObjOrNull) {
+		if(arrObjOrNull instanceof Array) {
+			return arrObjOrNull;
+		}
+		if(arrObjOrNull === null || arrObjOrNull === undefined) {
+			return arrObjOrNull;
+		}
+		return [arrObjOrNull];
+	};
 	Array.move = function(array, oldIndex, newIndex) {
+		/**
+		 *
+		 * @param array
+		 * @param oldIndex
+		 * @param newIndex
+		 * @returns
+		 */
 		var arr = [].concat(array);
 		var item = arr.splice(oldIndex, 1)[0];
 		before = arr.splice(0, newIndex);
