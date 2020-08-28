@@ -3,7 +3,7 @@ define(function(require) {
 	var listeners = [];
 	
 	var yell_later = (sender, topic, event) => setTimeout(() => {
-		listeners.each(function(listener) {
+		listeners.forEach(function(listener) {
 			if(listener.pattern.match(topic)) {
 				listener.callback.apply(listener.sender, event);
 			}
