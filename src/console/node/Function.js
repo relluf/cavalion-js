@@ -37,7 +37,8 @@ define(function(require) {
 						.replace(/\n/g, "<br>");
 				parentNode.appendChild(div);
 
-				var node = Node.create(this._value, "detail", OnlyKeyNode).getNode();
+				var node = Node.create(Object.create(this._value), "detail", OnlyKeyNode).getNode();
+					// node = Node.create(js.mixIn({stack:e.stack}, e), "detail", OnlyKeyNode).getNode();
 				parentNode.appendChild(node);
 			}
 		}

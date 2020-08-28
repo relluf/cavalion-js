@@ -9,17 +9,17 @@ define(function(require) {
 
 		prototype: {
 
-			/**
-			 * @overrides ../Node.prototype.initializeContainer
-			 */
 			initializeKey: function(node) {
+				/**
+				 * @overrides ../Node.prototype.initializeContainer
+				 */
 				node.innerHTML = String.format("%H", this._key);
 			},
 
-			/**
-			 * @overrides ../Node.prototype.initializeContainer
-			 */
 			initializeValue: function(node) {
+				/**
+				 * @overrides ../Node.prototype.initializeContainer
+				 */
 			}
 		}
 	};

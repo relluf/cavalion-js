@@ -16,9 +16,7 @@ define(function(require) {
 	}
 
 	return (HotkeyManager = HotkeyManager(require, {
-
 		inherits: DocumentHook,
-
 		prototype: {
 			_events: ["onkeydown", "onkeyup", "onkeypress"],
 			_listeners: null,
@@ -87,7 +85,6 @@ define(function(require) {
 				}
 			}
 		},
-
 		statics: {
 			instance: null,
 			getInstance: function() {
