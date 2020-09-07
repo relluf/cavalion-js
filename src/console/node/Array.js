@@ -19,7 +19,7 @@ define(["require", "js/defineClass", "../Node"], function(require, Array, Node) 
 			 */
 			initializeValue: function(node) {
 				var arr = this.getArray();
-				node.innerHTML = String.format("Array[%d]", arr.length);
+				node.innerHTML = arr.name || js.sf("Array[%d]", arr.length);
 			},
 
 			/**
