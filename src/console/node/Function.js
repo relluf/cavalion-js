@@ -27,6 +27,11 @@ define(function(require) {
 				/** @overrides ../Node.prototype.initializeContainer */
 				var method = Method.getInherited(Function.prototype.toString) 
 					|| Method.getInherited(toString);
+
+				if(Object.keys(this._value).length > 0) {
+					var node = Node.create(this._value, "detail", OnlyKeyNode).getNode();
+					parentNode.appendChild(node);
+				}
 				
 				var div = document.createElement("div");
 				div.className = "code";
@@ -37,9 +42,6 @@ define(function(require) {
 						.replace(/\n/g, "<br>");
 				parentNode.appendChild(div);
 
-				var node = Node.create(Object.create(this._value), "detail", OnlyKeyNode).getNode();
-					// node = Node.create(js.mixIn({stack:e.stack}, e), "detail", OnlyKeyNode).getNode();
-				parentNode.appendChild(node);
 			}
 		}
 	}));
