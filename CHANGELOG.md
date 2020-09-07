@@ -1,13 +1,15 @@
-### 2020-08-27 - 1.0.52
+### 2020-08-29 - 1.0.53
 - Fixing uri display of vcl/Component-s in console
+- Developing console features, working on vcl/Component.uri property
+
+### 2020-08-27 - 1.0.52
+
+	src/console/node/Function.js
+	src/console/node/OnlyKey.js
+	src/util/HotkeyManager.js
 
 ### 2020-08-18 - 1.0.51
 - Adding Array.as
-
-		src/console/node/Function.js
-		src/console/node/OnlyKey.js
-		src/util/HotkeyManager.js
-
 
 ### 2020-08-05 - 1.0.50
 - Adding default js.nameOf() method
