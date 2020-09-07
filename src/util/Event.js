@@ -1,6 +1,9 @@
 define(function(require) {
 	/**
 	 * Event.js - Taken from dojo
+	 * 
+	 * @see Event.getKeyModifiers that ["shift", "alt", "metactrl", "ctrl"] is the way to specify modifiers
+	 *	they will automatically sorted.
 	 */
 
 	var js = require("js");
