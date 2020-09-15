@@ -31,15 +31,16 @@ define(function(require) {
 
 		b: beautify,
 		m: minify,
-		sj: serialize.serialize,
+		n: nameOf,
+		sj: JSON.stringify,//serialize.serialize,
+		pj: JSON.parse,
 		sf: String.format,
 		nameOf: nameOf,
 		defineClass: defineClass,
 		mixIn: mixIn,
 		
 		ctx: function(obj, defaults) {
-			return obj.hasOwnProperty(js_ctx_key) ? obj[js_ctx_key] 
-				: obj[js_ctx_key] = (obj[js_ctx_key] || defaults || {});
+			return obj.hasOwnProperty(js_ctx_key) ? obj[js_ctx_key] : obj[js_ctx_key] = (obj[js_ctx_key] || defaults || {});
 		},
 		
 		get: function(name, obj, defaultValue) {
