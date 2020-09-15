@@ -1,3 +1,6 @@
+### 2020-09-12 - 1.0.54
+- Adding JSON-shortcuts to `js`, ie. `js.sj` & `js.pj`
+
 ### 2020-08-29 - 1.0.53
 - Fixing uri display of vcl/Component-s in console
 - Developing console features, working on vcl/Component.uri property
