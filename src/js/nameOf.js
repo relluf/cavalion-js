@@ -1,15 +1,6 @@
 define(function() {
 
 	var methods = [
-		(obj) => {
-			if(obj.hasOwnProperty("toString") && obj.constructor !== Object) {
-				if(obj === window) return "Window";
-	            return obj.toString();
-			}
-			if(obj.constructor && obj.constructor.prototype.toString === Object.prototype.toString) {
-				return obj.constructor.name;
-			}
-		},
 		(obj) => (obj.id || obj.Id || obj.ID),
 		(obj) => (obj.naam || obj.omschrijving || obj.code || obj.name || obj.description),
 		(obj) => (obj.Naam || obj.Omschrijving || obj.Code || obj.Name || obj.Description),
@@ -38,6 +29,14 @@ define(function() {
 			if((r = methods.after[i].apply(this, arguments)) !== undefined) {
 				return r;
 			}
+		}
+
+		if(obj.hasOwnProperty("toString") && obj.constructor !== Object) {
+			if(obj === window) return "Window";
+            return obj.toString();
+		}
+		if(obj.constructor && obj.constructor.prototype.toString === Object.prototype.toString) {
+			return obj.constructor.name;
 		}
 		
 		return obj ? obj.toString() || obj.constructor.prototype.toString.apply(obj, []) : String(obj);
