@@ -1,3 +1,6 @@
+### 2020-10-07 - 1.0.55
+- Introducing `js.nameOf.methods.after` (I guess we need priorities?)
+
 ### 2020-09-12 - 1.0.54
 - Adding JSON-shortcuts to `js`, ie. `js.sj` & `js.pj`
 
