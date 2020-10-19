@@ -4,6 +4,7 @@ define(function() {
 		(obj) => (obj.id || obj.Id || obj.ID),
 		(obj) => (obj.naam || obj.omschrijving || obj.code || obj.name || obj.description),
 		(obj) => (obj.Naam || obj.Omschrijving || obj.Code || obj.Name || obj.Description),
+		(obj) => (obj.Titel || obj.titel || obj.Title || obj.title),
  // TODO xml-thingy		
 		(obj) => (obj['#text']),
 		(obj) => (obj['@_name'])
@@ -11,11 +12,6 @@ define(function() {
 	
 	methods.after = [];
 
-	/**
-	 *
-	 * @param obj
-	 * @returns
-	 */
 	function nameOf(obj) {
 		if(obj === undefined || obj === null) return String(obj);
 		
