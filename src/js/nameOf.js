@@ -5,9 +5,6 @@ define(function() {
 		(obj) => (obj.naam || obj.omschrijving || obj.code || obj.name || obj.description),
 		(obj) => (obj.Naam || obj.Omschrijving || obj.Code || obj.Name || obj.Description),
 		(obj) => (obj.Titel || obj.titel || obj.Title || obj.title),
- // TODO xml-thingy		
-		(obj) => (obj['#text']),
-		(obj) => (obj['@_name'])
 	];
 	
 	methods.after = [];
@@ -20,7 +17,7 @@ define(function() {
 				return r;
 			}
 		}
-		
+
 		for(var i = methods.after.length - 1, r; i >= 0; --i) {
 			if((r = methods.after[i].apply(this, arguments)) !== undefined) {
 				return r;
