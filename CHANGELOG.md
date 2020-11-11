@@ -1,3 +1,15 @@
+### 2020-11-10 - 1.0.58
+- Refactoring js.nameOf.methods => veldapps-xml
+ 
+### 2020-11-06 - 1.0.57
+- Adding minimal packing support through js/Packer.[un]pack(ace/string)
+
+### 2020-10-28
+- Editor<xml>/DetailViews: Working towards base class / integration .blocks features
+
+### 2020-10-19 - 1.0.56
+- Added more `js.nameOf`-methods
+
 ### 2020-10-07 - 1.0.55
 - Introducing `js.nameOf.methods.after` (I guess we need priorities?)
 
