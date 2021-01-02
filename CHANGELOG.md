@@ -1,6 +1,6 @@
-### 2020-11-10 - 1.0.58
-- Refactoring js.nameOf.methods => veldapps-xml
- 
+### 2020-11-11 - 1.0.58
+- Refactoring js.nameOf.methods => veldapps-xml /- also added some lamish debug/test feature to see which method is being used 
+
 ### 2020-11-06 - 1.0.57
 - Adding minimal packing support through js/Packer.[un]pack(ace/string)
 
