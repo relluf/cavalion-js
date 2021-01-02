@@ -17,7 +17,9 @@ define(function() {
 	];
 	
 	methods.before = [];
-	methods.after = [];
+	methods.after = [
+		(obj) => obj instanceof Array ? nameOfArr(obj): undefined
+	];
 
 	function nameOf(obj, test) {
 		if(obj === undefined || obj === null) return String(obj);
@@ -50,6 +52,12 @@ define(function() {
 		
 		return test ? ["one-of", obj.toString(), obj.constructor.prototype.toString.apply(obj, []), String(obj)]
 			: obj ? obj.toString() || obj.constructor.prototype.toString.apply(obj, []) : String(obj);
+	}
+	
+	function nameOfArr(arr) {
+		var ignore = [undefined, "[object Object]"];
+		var names = arr.map(obj => js.nameOf(obj)).filter(_ => ignore.indexOf(_) !== -1);
+		return names.length ? names.join(", ") : js.sf("%s item%s", arr.length || "No", arr.length !== -1 ? "s" : "");
 	}
 
 	String.of = function(obj) {
