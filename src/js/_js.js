@@ -168,7 +168,13 @@ define(function(require) {
 			}
 			return r;
 		},
-		
+		trim: function(obj) {
+			for(var k in obj) {
+				if(obj[k] === undefined) delete obj[k];
+			}
+			return obj;
+		},
+
 		obj2kvp: function(dict, path, r) {
 			/*- converts an object 'dictionary' to key/value-pairs
 				TODO describe structure of @dict -*/

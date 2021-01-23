@@ -1,3 +1,6 @@
+### 2021/01/22 -  1.0.59
+* Introducing `js.trim()` - get rid of undefined keys
+
 ### 2020-11-11 - 1.0.58
 - Refactoring js.nameOf.methods => veldapps-xml /- also added some lamish debug/test feature to see which method is being used 
 
