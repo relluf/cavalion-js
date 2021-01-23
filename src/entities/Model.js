@@ -20,7 +20,6 @@ define(function(require) {
 							}
 						}
 					}
-					// def.name = attribute;
 					r[entity][attribute] = def;
 				}
 			}
@@ -28,7 +27,7 @@ define(function(require) {
 				for(var a in r[e]) {
 					var m = r[e][a].model;
 					if(r[e][a].type === "enum") {
-						r[e][a].model = m.split(",");
+						r[e][a].model = m.split ? m.split(",") : m;
 					} else if(typeof m === "string") {
 						r[e][a].model_ = m;
 						r[e][a].model = r[m];
