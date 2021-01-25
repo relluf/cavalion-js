@@ -1,3 +1,6 @@
+### 2021/01/24 -  1.0.60
+- Adding extensions to Math in order to deal with floating points
+
 ### 2021/01/22 -  1.0.59
 * Introducing `js.trim()` - get rid of undefined keys
 
