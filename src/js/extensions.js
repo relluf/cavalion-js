@@ -313,7 +313,60 @@ define(function(require) {
 		s.push(fmt.substring(pos));
 		return s.join("");
 	};
+
+/*--- Math */
+
+	// @see https://stackoverflow.com/questions/11695618/dealing-with-float-precision-in-javascript
+	var _cf = (
+		function() {
+			function _shift(x) {
+				var parts = x.toString().split('.');
+				return (parts.length < 2) ? 1 : Math.pow(10, parts[1].length);
+			}
+			return function() { 
+				return Array.prototype.reduce.call(arguments, (prev, next) => { 
+					return prev === undefined || next === undefined 
+							? undefined : Math.max(prev, _shift(next)); 
+					}, -Infinity);
+			};
+		})();
 	
+	Math.a = function () {
+		var f = _cf.apply(null, arguments); if(f === undefined) return undefined;
+		function cb(x, y, i, o) { 
+			return x + f * y; 
+		}
+		return Array.prototype.reduce.call(arguments, cb, 0) / f;
+	};
+	Math.s = function(l, r) { 
+		var f = _cf(l, r); 
+		return (l * f - r * f) / f; 
+	};
+	Math.m = function() {
+		var f = _cf.apply(null, arguments);
+		function cb(x, y, i, o) { 
+			return (x*f) * (y*f) / (f * f); 
+		}
+		return Array.prototype.reduce.call(arguments, cb, 1);
+	};	
+	Math.d = function(l, r) { 
+		var f = _cf(l, r); 
+		return (l * f) / (r * f); 
+	};
+	Math.f = (n) => {
+		var r = js.sf("%f", n), i, dot = r.indexOf(".");
+		if((i = r.indexOf("0000")) > dot) {
+			return n.toFixed(i - dot - 1);
+		}
+		if((i = r.indexOf("9999")) > dot) {
+			return n.toFixed(i - dot - 1);
+		}
+		return n;
+	};
+
+
+/*--- */
+
 	Date.prototype.getWeekNumber = function(){
 	    var d = new Date(+this);
 	    d.setHours(0, 0, 0);
