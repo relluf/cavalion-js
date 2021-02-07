@@ -183,7 +183,9 @@ try {
         		// name = name.substring(1);
         	}
         	
-        	req([js.up(name) + "/prototype", name], function(proto, dict) {
+        	var proto = js.up(name) + "/prototype";
+        	var suffix = name.charAt(0) === "/" ? ".js" : "";
+    		req([proto + suffix, name + suffix], function(proto, dict) {
         		// group to language (nl_NL/en_UK/en_US/etc)
         		name = name.split("/").pop();
         		locale[name] = locale[name] || {};
