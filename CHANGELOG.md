@@ -1,3 +1,6 @@
+### 2021/02/07 -  1.0.61
+- locale: Fix for using /-prefixed paths 
+
 ### 2021/01/24 -  1.0.60
 - Adding extensions to Math in order to deal with floating points
 
