@@ -1,3 +1,6 @@
+### 2021/03/12 -  1.0.62
+- util/Xml: Introducing `jsonfy()`
+
 ### 2021/02/07 -  1.0.61
 - locale: Fix for using /-prefixed paths 
 
