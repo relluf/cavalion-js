@@ -1,6 +1,7 @@
 define(function(require) {
 
 	var Browser = require("./Browser");
+	var singleSeperator = (str, sep) => str.split(sep).filter(_ => _).join(sep);
 
 	var HtmlElement = {
 
@@ -32,9 +33,9 @@ define(function(require) {
 		},
 		addClass : function(node, className) {
 			if (node.className !== "") {
-				node.className = node.className + " " + className;
+				node.className = singleSeperator(node.className + " " + className, " ");
 			} else {
-				node.className = className;
+				node.className = singleSeperator(className);
 			}
 		},
 		addClasses : function(node, classes) {
