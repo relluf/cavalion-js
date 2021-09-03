@@ -38,7 +38,9 @@ define(function(require) {
 		nameOf: nameOf,
 		defineClass: defineClass,
 		mixIn: mixIn,
-		groupBy: (arr, key) => arr.reduce((a, o) => ((a[o[key]] || (a[o[key]] = [])).push(o), a), {}),
+		groupBy: (arr, key) => {
+			return arr.reduce((a, o) => ((a[js.get(key, o)] || (a[js.get(key, o)] = [])).push(o), a), {});
+		},
 		ctx: function(obj, defaults) {
 			return obj.hasOwnProperty(js_ctx_key) ? obj[js_ctx_key] : obj[js_ctx_key] = (obj[js_ctx_key] || defaults || {});
 		},
