@@ -1,3 +1,6 @@
+### 2021/06/21 -  1.0.63
+- Introducing `js.groupBy()`
+
 ### 2021/03/12 -  1.0.62
 - util/Xml: Introducing `jsonfy()`
 
