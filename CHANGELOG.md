@@ -1,3 +1,7 @@
+### 2021/09/18 -  1.0.64
+
+- Introducing `String.decamelize = String.decamelcase`
+
 ### 2021/06/21 -  1.0.63
 - Introducing `js.groupBy()`
 

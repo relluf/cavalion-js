@@ -9,6 +9,7 @@ define(function(require) {
 		var inh = ctx.completeLoad;
 		ctx.modulesLoaded = [];
 		ctx.completeLoad = function(moduleName) {
+			// console.log(moduleName);
 			ctx.modulesLoaded.push(moduleName);
 			//console.log(moduleName);
 			return inh.apply(this, arguments);
@@ -127,6 +128,21 @@ define(function(require) {
 		 * @returns
 		 */
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
+	};
+	String.decamelize = String.decamelcase = function(s) {
+		var r = s.charAt(0), i = 0, ch = r;
+		while(++i < s.length) {
+			if(ch === undefined || ((ch < 'A' || ch > 'Z') || (ch < '0' && ch > '9'))) {
+				ch = s.charAt(i);
+				if((ch >= 'A' && ch <= 'Z')) {// || (ch >= '0' && ch <= '9')) {
+					r += " ";
+				}
+			} else {
+				ch = s.charAt(i);
+			}
+			r += ch;
+		}
+		return r.toLowerCase();
 	};
 	String.escape = function (s) {
 		/**
