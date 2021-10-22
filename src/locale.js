@@ -133,7 +133,15 @@ try {
 	    	
 	    return r;
     };
-    locale.prefixed = function(prefix) {
+    locale.prefixed = function(prefix/*, defaults */) {
+    	if(prefix instanceof Array) {
+    		prefix = prefix[0];
+    	}
+
+    	if(arguments.length > 1) {
+    		locale.define(prefix, arguments[1]);
+    	}
+    	
     	return function(id/*, ... */) {
     		if(arguments.length === 0) {
     			return prefix;
@@ -143,6 +151,18 @@ try {
     		args[0] = prefix + id;
     		return locale.apply(this, args);
     	};
+    };
+	locale.define = function(prefix, defaults) {
+		for(var loc in defaults) {
+			var L = {}; L[prefix] = defaults[loc];
+			
+			// console.log(1, locale[loc], L);	
+
+			locale[loc] = locale[loc] || {};
+			js.mixIn(locale[loc], js.obj2kvp(L));
+
+			// console.log(2, locale[loc], L);	
+		}
     };
     
 	if(typeof window !== "undefined" && typeof window.location !== "undefined") {
@@ -169,6 +189,8 @@ try {
 
 	return {
 		locale: locale,
+		
+		prefixed: locale.prefixed,
 		module: function(module) {
 			return function() {
 				var args = js.copy_args(arguments);
@@ -194,8 +216,10 @@ try {
         		dict = unwrap(js.mixIn(js.obj2kvp(proto || {}), js.obj2kvp(dict)));
         		
         		js.mixIn(locale[name], dict);
+        		
         		onLoad(dict);
         	});
-        }
+        },
+        define: locale.define
 	};
 });
