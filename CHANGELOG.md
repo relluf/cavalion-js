@@ -1,3 +1,12 @@
+### 2021/10/09 -  1.0.65
+
+- Now supporting the following patterns: 
+ 
+	>	var locale = require("locale").prefixed(["Onderzoek"], { ... });
+	>	var locale = require("locale").prefixed("Onderzoek");
+
+Not sure what todo with the default yet.
+
 ### 2021/09/18 -  1.0.64
 
 - Introducing `String.decamelize = String.decamelcase`
