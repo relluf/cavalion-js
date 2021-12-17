@@ -1,3 +1,7 @@
+### 2021/12/17 -  1.0.66
+
+- Enhancing `locale`, now supporting references with the ::-prefix
+
 ### 2021/10/09 -  1.0.65
 
 - Now supporting the following patterns: 
