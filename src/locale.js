@@ -86,6 +86,20 @@ try {
 			
 	/*- TODO Still not found, split by / delimiter and replace by star and try again */
 	
+			/* FR: reference other locale with double colon */
+			if(typeof r === "string") {
+				if(r.charAt(0) === "\\") {
+					r = r.substring(1);
+				}
+				if(r.charAt(0) === ":" && r.charAt(1) === ":") {
+					try {
+						r = locale(r.substring(2));
+					} catch(e) {
+						r = "{" + r + "}: " + e.message;
+					}
+				}
+			}
+	
 			return r;
 } finally {
 	if(began) {
@@ -178,7 +192,7 @@ try {
 	}
 	
 	function unwrap(dict, v) {
-		/* unwrap arrays */
+		/* unwrap arrays */ // TODO why?
 		for(var k in dict) {
 			if(((v = dict[k]) instanceof Array)) {
 				dict[k] = v[0];
