@@ -1,6 +1,10 @@
 define(function() {
+	
+	String.of = function(obj) {  // TODO require("String.of")
+		return nameOf(obj);
+	};
 
-	var methods = [
+	var methods = (nameOf.methods = [
 		(obj) => (obj.id || obj.Id || obj.ID),
 		(obj) => (obj.opmerking || obj.Opmerking),
 		(obj) => (obj.naam || obj.omschrijving || obj.code || obj.name || obj.description),
@@ -14,12 +18,18 @@ define(function() {
 				
 		// 	return typeof s === "string" ? s : undefined;
 		// }
-	];
-	
+	]);
+
 	methods.before = [];
 	methods.after = [
 		(obj) => obj instanceof Array ? nameOfArr(obj): undefined
 	];
+	methods.set = (name, impl) => {
+		if(!methods[name]) {
+			methods.push((obj) => methods[name](obj));
+		}
+		return (methods[name] = impl);
+	};
 
 	function nameOf(obj, test) {
 		if(obj === undefined || obj === null) return String(obj);
@@ -53,18 +63,11 @@ define(function() {
 		return test ? ["one-of", obj.toString(), obj.constructor.prototype.toString.apply(obj, []), String(obj)]
 			: obj ? obj.toString() || obj.constructor.prototype.toString.apply(obj, []) : String(obj);
 	}
-	
 	function nameOfArr(arr) {
 		var ignore = [undefined, "[object Object]"];
 		var names = arr.map(obj => js.nameOf(obj)).filter(_ => ignore.indexOf(_) !== -1);
 		return names.length ? names.join(", ") : js.sf("%s item%s", arr.length || "No", arr.length !== -1 ? "s" : "");
 	}
-
-	String.of = function(obj) {
-		return nameOf(obj);
-	};
-
-	nameOf.methods = methods;
 
 	return nameOf;
 });
