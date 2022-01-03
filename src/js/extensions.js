@@ -112,10 +112,6 @@ define(function(require) {
 	}
 
 	if(String.of === undefined) {
-		/**
-		 *
-		 * @param obj
-		 */
 		String.of = function(obj) {
 			return obj && obj.toString();
 		};
