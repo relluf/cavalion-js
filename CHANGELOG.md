@@ -1,3 +1,7 @@
+### 2022/01/02 -  1.0.67
+
+* Introducing `js.nameOf.methods.set(name, impl)` - it allows for overriding/extending a certain method iteratively
+
 ### 2021/12/17 -  1.0.66
 
 - Enhancing `locale`, now supporting references with the ::-prefix
