@@ -51,6 +51,7 @@ define(function(require) {
 			KEY_NUM_LOCK: 144,
 			KEY_SCROLL_LOCK: 145
 		},
+		window_Event: window.Event,
 
 		callListener: function(listener, curTarget) {
 			/**
@@ -170,7 +171,7 @@ define(function(require) {
 		    		modifiers.indexOf("metactrl") !== -1), modifiers);
 		},
 		modifiersMatch: function(evt, modifiers) {
-			if(!(evt instanceof window.Event)) {
+			if(!(evt instanceof this.window_Event)) {
 				console.warn("This particular usage has been deprecated");
 				return this.modifiersMatchDeprecated(evt, modifiers);
 			}

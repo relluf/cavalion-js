@@ -59,7 +59,7 @@ define(function(require) {
 			 *
 			 */
 			getString: function() {
-				return this._value;
+				return this._value;//js.nameOf(this._value);
 			}
 		}
 	};

@@ -25,6 +25,7 @@ define(function(require) {
 				this._listeners = {};
 			},
 			register: function(hotkey, li) {
+				/* type, keyCode, callback, modifiers */
 				if(typeof li === "object") {
 					if(typeof hotkey === "string") {					
 						li.modifiers = hotkey.toLowerCase().split("+");
