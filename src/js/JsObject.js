@@ -6,9 +6,9 @@ define(function(require) {
 	
 	/** Keeps track of the next hashCode */
 	var hashCode = 0;
-	var all = [];
+	var references = [];
 
-	all.push = function() {
+	references.push = function() {
 		hashCode += arguments.length;
 		return Array.prototype.push.apply(this, arguments);
 	};
@@ -40,7 +40,7 @@ define(function(require) {
 					if(k !== "@hashCode") {
 						delete this[k];
 					} else {// if(this.hasOwnProperty("@hashCode")) {
-						delete all[this['@hashCode']];
+						delete references[this['@hashCode']];
 						this['@hashCode'] = -this['@hashCode'];
 					}
 				}
@@ -53,7 +53,7 @@ define(function(require) {
 					}
 					this['@hashCode'] = hashCode++;
 
-					all[this['@hashCode']] = this;
+					references[this['@hashCode']] = this;
 
 					return this['@hashCode'];
 				}
@@ -87,8 +87,8 @@ define(function(require) {
 
 		statics: {
 
-			$: all,
-			all: all
+			$: references,
+			all: references
 
 		}
 	}));
