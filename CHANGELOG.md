@@ -1,3 +1,8 @@
+### 2022/03/28 -  1.0.69
+
+* e3ce126 - Clogging
+* 0d7badc - js/JsObject: Still refactoring [all !==> references (!)]
+
 ### 2022/03/28 -  1.0.68
 
 * Updating 
