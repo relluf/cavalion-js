@@ -19,7 +19,11 @@ define(["require", "js/defineClass", "../Node"], function(require, Array, Node) 
 			 */
 			initializeValue: function(node) {
 				var arr = this.getArray();
-				node.innerHTML = arr.name || js.sf("Array[%d]", arr.length);
+				if(arr.name instanceof Function) {
+					node.innerHTML = /*js.nameOf(arr)*/arr.name(arr) || js.sf("Array[%d]", arr.length);
+				} else {
+					node.innerHTML = /*js.nameOf(arr)*/arr.name || js.sf("Array[%d]", arr.length);
+				}
 			},
 
 			/**
