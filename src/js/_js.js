@@ -2,20 +2,23 @@ define(function(require) {
 
 	require("./extensions");
 
-	var global = require("./global");
-	var minify = require("./minify");
-	var mixIn = require("./mixIn");
-	var beautify = require("./beautify");
-	var nameOf = require("./nameOf");
-	var serialize = require("./serialize");
-	var defineClass = require("./defineClass");
-	var Method = require("./Method");
-//	var js;
+	const global = require("./global");
+	const minify = require("./minify");
+	const mixIn = require("./mixIn");
+	const beautify = require("./beautify");
+	const nameOf = require("./nameOf");
+	const serialize = require("./serialize");
+	const defineClass = require("./defineClass");
 
-    var JsObject = require("./JsObject");
-    
-    var js_ctx_key = "[[js.ctx]]";
+	const Method = require("./Method");
+    const JsObject = require("./JsObject");
 
+    const js_ctx_key = "[[js.ctx]]";
+	const groupBy = (arr, key) => arr.reduce((a, o) => 
+		((a[js.get(key, o)] || (a[js.get(key, o)] = []))
+			.push(o), a), {});
+
+	/*var js;*/
 	return (js = {
 
 		// handy-dandy
@@ -38,9 +41,35 @@ define(function(require) {
 		nameOf: nameOf,
 		defineClass: defineClass,
 		mixIn: mixIn,
-		groupBy: (arr, key) => {
-			return arr.reduce((a, o) => ((a[js.get(key, o)] || (a[js.get(key, o)] = [])).push(o), a), {});
+		// groupBy: (arr, key) => {
+		// 	return arr.reduce((a, o) => ((a[js.get(key, o)] || (a[js.get(key, o)] = [])).push(o), a), {});
+		// },
+		groupBy: (arr, keys, mth) => {
+			/*- groupBy: receives an array of objects and returns an object 
+					which keys hold reference to the resulting groups.
+			
+				arr: array to be grouped by keys
+				keys: array of strings, or comma-delimited string indicating the keys to group by
+				mth: optional, callback receiving and returning each group
+			*/
+
+			if(!(keys instanceof Array)) {
+				keys = keys.split(",");
+			}
+
+			var obj = groupBy(arr, keys.shift());
+			
+			for(var k in obj) {
+				if(keys.length) {
+					obj[k] = js.groupBy(obj[k], [].concat(keys), mth);
+				} else if(mth) {
+					obj[k] = mth(obj[k]);
+				}
+			}
+			
+			return obj;
 		},
+		
 		ctx: function(obj, defaults) {
 			return obj.hasOwnProperty(js_ctx_key) ? obj[js_ctx_key] : obj[js_ctx_key] = (obj[js_ctx_key] || defaults || {});
 		},
