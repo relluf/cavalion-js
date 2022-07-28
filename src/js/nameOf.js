@@ -31,7 +31,7 @@ define(function() {
 		return (methods[name] = impl);
 	};
 
-	function nameOf(obj, test) {
+	function nameOf(obj, hint, test) {
 		if(obj === undefined || obj === null) return String(obj);
 		
 		for(var i = methods.before.length - 1, r; i >= 0; --i) {
