@@ -1,3 +1,10 @@
+### 2022/07/28 -  1.0.70
+
+* 2bb8d17 - updates/commits code that has been shipped for months now
+* dc8fb8d - enhances js.groupBy for grouping on multiple attributes
+* caa9abc - adds hint parameter to js.nameOf
+* 004cc0f - clogs the latest changes
+
 ### 2022/03/28 -  1.0.69
 
 * e3ce126 - Clogging
