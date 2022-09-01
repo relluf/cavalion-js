@@ -15,35 +15,7 @@ define(function(require) {
 	function locale(id) {
     	var loc = locale.loc;//arguments.callee.loc;
     	
-    	if(id === undefined || locale[loc] === undefined) {
-    		return "{{" + id + "}}";
-    	}
-    	
-    	if(id instanceof RegExp) {
-    		var m = [], match;
-    		for(var k in locale[loc]) {
-    			if((match = id.exec(k)) !== null && match.length > 0) {
-    				if(m.indexOf(match[0]) === -1) {
-    					m.push(match[0]);
-    				}
-    			}
-    		}
-    		return m;
-    	}
-    	
-    	if(locale.slashDotRepl === true) {
-    		id = id.replace(/\/\./g, "#");
-    	}
-
     	function resolve(id) {
-    		if(id === undefined) debugger;
-
-var began;    		
-if((began = locale.debug)) {
-	console.group("locale-resolve", id);
-}
-try {
-	
 			/*- Find in the dictionary */
 	    	var r = window.locale[loc][id], i, nid, dash = id.indexOf("-"), dot = id.indexOf(".");
 	    	var preferdash = (dot === -1 || dot > dash);
@@ -101,14 +73,38 @@ try {
 			}
 	
 			return r;
-} finally {
-	if(began) {
-		console.groupEnd();
-	}
-}
     	}
     	
-    	var r = resolve(id);
+    	if(id === undefined || locale[loc] === undefined) {
+    		return "{{" + id + "}}";
+    	}
+    	
+    	if(id instanceof RegExp) {
+    		var m = [], match;
+    		for(var k in locale[loc]) {
+    			if((match = id.exec(k)) !== null && match.length > 0) {
+    				// if(m.indexOf(match[0]) === -1) {
+    					m.push([k, locale[loc][k]]);
+    				// }
+    			}
+    		}
+    		return m.sort((i1, i2) => i1[0] < i2[0] ? -1 : i1[0] === i2[0] ? 0 : 1);
+    	}
+    	
+    	var r;
+    	if(id instanceof Array) { // #CVLN-202209091-1
+    		r = resolve(locale(id.join("")));
+    		if(r === undefined) {// && id[id.length - 2] !== "*") {
+    			id[0] = "*";
+    			r = resolve(id.join(""));
+    		}
+    	} else {
+    		if(locale.slashDotRepl === true) {
+	    		id = id.replace(/\/\./g, "#");
+    		}
+    		r = resolve(id);
+    	}
+
 		if(r === undefined) {
     		var arr = (window.locale.missing = (window.locale.missing || []));
     		arr.push(id);
