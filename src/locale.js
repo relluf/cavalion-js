@@ -93,11 +93,16 @@ define(function(require) {
     	
     	var r;
     	if(id instanceof Array) { // #CVLN-202209091-1
-    		r = resolve(id.join(""));
-    		if(r === undefined) {// && id[id.length - 2] !== "*") {
-    			id[0] = "*";
-    			r = resolve(id.join(""));
+    		// r = resolve(id.join(""));
+    		var id_ = id.join("");
+    		r = locale[loc][id.join("")];
+    		while(r === undefined && id.length > 1) {
+    			while(id.shift() === "*") ;
+    			id.unshift("*");
+    			
+	    		r = resolve(id.join(""));
     		}
+			if(r == undefined) r = locale(id_);
     	} else {
     		if(locale.slashDotRepl === true) {
 	    		id = id.replace(/\/\./g, "#");
@@ -158,7 +163,12 @@ define(function(require) {
     		}
     		
     		var args = js.copy_args(arguments);
-    		args[0] = prefix + id;
+    		if(args[0] instanceof Array) {
+    			args[0].unshift(prefix);
+    			args[0] = [args[0].pop(), args[0].join("")].reverse();
+    		} else {
+    			args[0] = [prefix, id];
+    		}
     		return locale.apply(this, args);
     	};
     };
