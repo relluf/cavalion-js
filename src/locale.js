@@ -93,7 +93,7 @@ define(function(require) {
     	
     	var r;
     	if(id instanceof Array) { // #CVLN-202209091-1
-    		r = resolve(locale(id.join("")));
+    		r = resolve(id.join(""));
     		if(r === undefined) {// && id[id.length - 2] !== "*") {
     			id[0] = "*";
     			r = resolve(id.join(""));
