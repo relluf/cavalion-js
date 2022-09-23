@@ -20,9 +20,6 @@ define(function(require) {
 		}
 	});
 
-	/**
-	 *
-	 */
 	function getDefaultInherits() {
 		if(classMap["js/JsObject"] === undefined) {
 			console.log("JsObject not defined!");
@@ -33,21 +30,21 @@ define(function(require) {
 		return classMap["js/JsObject"];
 	}
 
-	/**
-	 * toString implementation for constructors
-	 */
 	function classConstructorToString() {
+		/**
+		 * toString implementation for constructors
+		 */
 		if(this.hasOwnProperty(classObjKeyName)) {
 			return String.format("function %s() { [constructor code] }", this[classObjKeyName].name);
 		}
 		return Function.prototype.toString.apply(this, arguments);
 	}
 
-	/**
-	 * This is Chrome specific (as far as I know). It will show fancy names for
-	 * object instances in the console.
-	 */
 	function namedFunction(name, f) {
+		/**
+		 * This is Chrome specific (as far as I know). It will show fancy names for
+		 * object instances in the console.
+		 */
 		var symbol;
 		var g = f, fname = f.name;
 		
@@ -80,12 +77,12 @@ define(function(require) {
 		return f;
 	}
 
-	/**
-	 * Create a constructor function used for instances of Class.defin(e)itions
-	 *
-	 * @returns {Function}
-	 */
 	function createConstructor(name) {
+		/**
+		 * Create a constructor function used for instances of Class.defin(e)itions
+		 *
+		 * @returns {Function}
+		 */
 		return namedFunction(name || "AnonymousClass", function() {
 			/**
 			 * js/Class.constructor: This constructor inspects it's classObj in

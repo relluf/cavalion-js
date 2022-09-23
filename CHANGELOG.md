@@ -1,3 +1,8 @@
+### 2022/07/28 -  1.0.71*
+
+* !!!???? Implements the support for falling back automatically ([CVLN-20220901-2-](/Dropbox-cavalion/Issues/:/))
+fixes a bug where falling back on wildcarded terms was not working correctly
+
 ### 2022/07/28 -  1.0.70
 
 * 2bb8d17 - updates/commits code that has been shipped for months now
