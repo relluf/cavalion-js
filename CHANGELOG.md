@@ -1,5 +1,6 @@
-### 2022/07/28 -  1.0.71*
+### 2022/07/28 10/29 -  1.0.71*
 
+* Adjusts/enhances `js.groupBy()` to use js.get(key,obj) in case obj doesn't have key
 * !!!???? Implements the support for falling back automatically ([CVLN-20220901-2-](/Dropbox-cavalion/Issues/:/))
 fixes a bug where falling back on wildcarded terms was not working correctly
 

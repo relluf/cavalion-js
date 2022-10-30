@@ -59,13 +59,14 @@ define(function(require) {
 
 			var obj = groupBy(arr, keys.shift());
 			
-			for(var k in obj) {
-				if(keys.length) {
-					obj[k] = js.groupBy(obj[k], [].concat(keys), mth);
-				} else if(mth) {
-					obj[k] = mth(obj[k]);
-				}
-			}
+		    for (var k in obj) {
+		    	var v = obj.hasOwnProperty(k) ? obj[k] : js.get(k, obj);
+		        if (keys.length) {
+		            obj[k] = js.groupBy(v, [].concat(keys), mth);
+		        } else if (mth) {
+		            obj[k] = mth(v);
+		        }
+		    }
 			
 			return obj;
 		},
