@@ -41,9 +41,6 @@ define(function(require) {
 		nameOf: nameOf,
 		defineClass: defineClass,
 		mixIn: mixIn,
-		// groupBy: (arr, key) => {
-		// 	return arr.reduce((a, o) => ((a[js.get(key, o)] || (a[js.get(key, o)] = [])).push(o), a), {});
-		// },
 		groupBy: (arr, keys, mth) => {
 			/*- groupBy: receives an array of objects and returns an object 
 					which keys hold reference to the resulting groups.
@@ -381,6 +378,17 @@ define(function(require) {
 			 * @returns
 			 */
 			return window.clearTimeout(id);
-		}
-	});
+		},
+		waitAll: function(/* ... */) {
+			return Promise.all(js.copy_args(arguments).flat().map(p => {
+				if(typeof p === "string" && p.endsWith("ms")) { // for syntax/code that says it all
+					return new Promise(resolve => setTimeout(resolve, parseInt(p, 10)));
+				} else if(typeof p === "number") { // ok, we'll do this too ;-)
+					return new Promise(resolve => setTimeout(resolve, p));
+				} else if(!(p instanceof Promise)) {
+					throw new Error("Can not wait for", p);
+				}
+				return p;
+			}));
+		},	});
 });

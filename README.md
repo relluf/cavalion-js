@@ -3,7 +3,7 @@
 Cavalion common JavaScript library. It consist of:
 
 * Constructor class registration
-* Console
+* Console printing out vars
 * Data interfaces
 * Design(er) package (in development)
 * Utility Classes
