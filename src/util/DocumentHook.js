@@ -18,7 +18,7 @@ define(function(require) {
 			_events: [
 			    "ontransitionend",
 			    "ontouchstart", "ontouchend", "ontouchmove", "ontap", "ondbltap", "ongesture",
-				"onclick", "ondblclick",
+				"onclick", "ondblclick", "onmouseout", "onmouseover",
 				"onmousemove", "onmousedown", "onmouseup", "_onmousewheel", "onmouseenter", "onmouseleave",
 				"onkeydown", "onkeyup", "onkeypress",
 				"onfocus", "onblur",
