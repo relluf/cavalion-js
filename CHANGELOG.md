@@ -1,3 +1,11 @@
+### 2022/11/15 -  1.0.72
+
+* DocumentHook: Adds the events onmouseover and onmouseout
+
+### 2022/11/07
+
+* Adds `js.waitAll()`
+
 ### 2022/07/28 10/29 -  1.0.71
 
 * Adjusts/enhances `js.groupBy()` to use js.get(key,obj) in case obj doesn't have key
