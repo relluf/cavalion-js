@@ -29,7 +29,6 @@ define(function(require) {
 		}
 		return classMap["js/JsObject"];
 	}
-
 	function classConstructorToString() {
 		/**
 		 * toString implementation for constructors
@@ -39,7 +38,6 @@ define(function(require) {
 		}
 		return Function.prototype.toString.apply(this, arguments);
 	}
-
 	function namedFunction(name, f) {
 		/**
 		 * This is Chrome specific (as far as I know). It will show fancy names for
@@ -76,7 +74,6 @@ define(function(require) {
 		}
 		return f;
 	}
-
 	function createConstructor(name) {
 		/**
 		 * Create a constructor function used for instances of Class.defin(e)itions
