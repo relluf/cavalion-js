@@ -33,14 +33,14 @@ define(function(require) {
 		$: JsObject.$,
 
 		b: beautify,
-		m: minify,
+		m: minify, mi: mixIn,
 		n: nameOf,
 		sj: JSON.stringify,//serialize.serialize,
 		pj: JSON.parse,
 		sf: String.format,
 		nameOf: nameOf,
 		defineClass: defineClass,
-		mixIn: mixIn,
+		mixIn: mixIn, 
 		groupBy: (arr, keys, mth) => {
 			/*- groupBy: receives an array of objects and returns an object 
 					which keys hold reference to the resulting groups.
