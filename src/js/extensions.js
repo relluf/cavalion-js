@@ -274,10 +274,11 @@ define(function(require) {
 						}
 						s.push(value);
 					} else if(ch === "f") {
-	                    if (mod.charAt(0) === ".") {
-	                        len = parseInt(mod.substring(1), 10) || 0;
+						mod = mod.split(".");
+						if(mod.length === 2) {
+	                        len = parseInt(mod[1], 10) || 0;
 	                        value = arguments[i++];
-	                        var i1 = parseInt(value, 10) || 0;
+	                        var i1 = String.format("%" + mod[0] + "d", value);
 	                        var f = Math.abs(value - i1);
 							f *= Math.pow(10, len + 1);
 							f = "" + Math.round(Math.round(f) / 10);
@@ -374,6 +375,16 @@ define(function(require) {
 			return n.toFixed(i - dot - 1);
 		}
 		return n;
+	};
+	Math.f_= (value, regexps) => {
+		if(value === undefined || value === null) return null;
+		
+		regexps = regexps || [/0000+.$/, /9999+.$/];
+
+		value = value.toString();
+		regexps.forEach(re => value = value.replace(re, ""));
+
+		return parseFloat(value);
 	};
 
 

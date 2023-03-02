@@ -27,7 +27,7 @@ Cavalion common JavaScript library. It consist of:
 	* [JsObject](src/js/:.js) - _kind of super class_
 		* [Method](src/js/:.js) - _hacking with functions_
 	* [Class](src/js/:.js) - _Class.make() is where the meat is_
-		* [extensions](src/js/:.js)
+		* [extensions](src/js/:.js) - _extending native JS objects_
 			* [mixIn](src/js/:.js)
 		* [nameOf](src/js/:.js)
 		* [Method](src/js/:.js)
