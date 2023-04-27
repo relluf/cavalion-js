@@ -14,7 +14,7 @@ define(function(require) {
 
 	function locale(id) {
     	var loc = locale.loc;//arguments.callee.loc;
-    	
+
     	function resolve(id) {
 			/*- Find in the dictionary */
 	    	var r = window.locale[loc][id], i, nid, dash = id.indexOf("-"), dot = id.indexOf(".");
@@ -157,7 +157,7 @@ define(function(require) {
     		locale.define(prefix, arguments[1]);
     	}
     	
-    	return function(id/*, ... */) {
+    	const prefixed = function(id/*, ... */) {
     		if(arguments.length === 0) {
     			return prefix;
     		}
@@ -171,6 +171,10 @@ define(function(require) {
     		}
     		return locale.apply(this, args);
     	};
+    	
+    	prefixed.has = (id) => locale.has(prefix + id);
+    	
+    	return prefixed;
     };
 	locale.define = function(prefix, defaults) {
 		for(var loc in defaults) {
@@ -184,6 +188,7 @@ define(function(require) {
 			// console.log(2, locale[loc], L);	
 		}
     };
+    locale.has = (key) => locale[locale.loc].hasOwnProperty(key);
     
 	if(typeof window !== "undefined" && typeof window.location !== "undefined") {
 		locale.loc = (location.search.split('locale=')[1]||'').split('&')[0];
