@@ -18,10 +18,6 @@ define(function(require) {
 	return (Property = Property(require, {
 
 		prototype: {
-
-			/**
-			 *
-			 */
 			constructor: function(declaringClass, name, decl) {
 				this._declaringClass = declaringClass;
 				this._name = name;
@@ -76,10 +72,6 @@ define(function(require) {
 			getDeclaringClass: function() {
 				return this._declaringClass;
 			},
-
-			/**
-			 *
-			 */
 			getPropertyClass: function() {
 				throw new Error("Unknown class");
 			},
@@ -101,10 +93,6 @@ define(function(require) {
 				}
 				return this._editorClass;
 			},
-
-			/**
-			 *
-			 */
 			getEditorInfo: function(path) {
 				return path === undefined ? this._editorInfo : js.get(path, this._editorInfo || {});
 			},
@@ -168,10 +156,6 @@ define(function(require) {
 			isStrict: function() {
 				return this._strict;
 			},
-
-			/**
-			 *
-			 */
 			isReadOnly: function() {
 				return this.__set === Property.prototype.__set;
 			},
@@ -202,10 +186,6 @@ define(function(require) {
 			get: function(obj) {
 				return this.__get(obj);
 			},
-
-			/**
-			 *
-			 */
 			__get: function(obj) {
 				throw new Error("No getter defined");
 			},
@@ -216,10 +196,6 @@ define(function(require) {
 			set: function(obj, value) {
 				return this.__set(obj, value);
 			},
-
-			/**
-			 *
-			 */
 			__set: function(obj, value) {
 				throw new Error("No setter defined");
 			}
@@ -227,10 +203,6 @@ define(function(require) {
 		},
 
 		statics: {
-
-			/**
-			 *
-			 */
 			isReferencedClass: function(cls) {
 				if(Class.isConstructor(cls)) {
 					if(referencedClasses.indexOf(cls) !== -1) {
@@ -241,10 +213,6 @@ define(function(require) {
 				return false;
 			},
 
-
-			/**
-			 *
-			 */
 			registerReferencedClass: function(cls) {
 				if(Class.isConstructor(cls)) {
 					referencedClasses.push(cls);
@@ -252,10 +220,6 @@ define(function(require) {
 					throw new Error(String.format("%s is not a class constructor"));
 				}
 			},
-
-			/**
-			 *
-			 */
 			initialize: function(property, prop) {
 
 				var ctor = property._declaringClass;
@@ -465,171 +429,83 @@ define(function(require) {
 			},
 
 			GetDefaultValue: {
-
-				/**
-				 *
-				 */
 				VALUE: function(obj) {
 					return this._defaultValue;
 				},
-
-				/**
-				 *
-				 */
 				METHOD: function(obj) {
 					return obj[this._defaultValue]();
 				},
-
-				/**
-				 *
-				 */
 				INLINE: function(obj) {
 					return this._defaultValue.apply(obj, []);
 				}
 			},
-
 			Getter: {
-
-				/**
-				 *
-				 */
 				MEMBER: function(obj) {
 					return obj[this._getter];
 				},
-
-				/**
-				 *
-				 */
 				METHOD: function(obj) {
 					return obj[this._getter]();
 				},
-
-				/**
-				 *
-				 */
 				INLINE: function(obj) {
 					return this._getter.apply(obj, []);
 				}
 			},
 
 			IsAssignable: {
-
-				/**
-				 *
-				 */
 				VALUE: function(obj) {
 					return this._assignable;
 				},
-
-				/**
-				 *
-				 */
 				METHOD: function(obj) {
 					return obj[this._assignable](obj);
 				},
-
-				/**
-				 *
-				 */
 				INLINE: function(obj) {
 					return this._assignable.apply(this, [obj]);
 				}
 			},
-
 			IsEnabled: {
-
-				/**
-				 *
-				 */
 				VALUE: function(obj) {
 					return this._enabled;
 				},
-
-				/**
-				 *
-				 */
 				METHOD: function(obj) {
 					return obj[this._enabled]();
 				},
-
-				/**
-				 *
-				 */
 				INLINE: function(obj) {
 					return this._enabled.apply(obj, []);
 				}
 			},
-
 			IsStored: {
-
-				/**
-				 *
-				 */
 				VALUE: function(obj) {
 					return this.hasDefaultValue(obj) ? false : this._stored;
 				},
-
-				/**
-				 *
-				 */
 				METHOD: function(obj) {
 					return this.hasDefaultValue(obj) ? false : obj[this._stored](obj);
 				},
-
-				/**
-				 *
-				 */
 				INLINE: function(obj) {
 					return this.hasDefaultValue(obj) ? false : this._stored.apply(this, [obj]);
 				}
 			},
-
 			IsVisible: {
-
-				/**
-				 *
-				 */
 				VALUE: function(obj) {
 					return this._visible;
 				},
-
-				/**
-				 *
-				 */
 				METHOD: function(obj) {
 					return obj[this._visible]();
 				},
-
-				/**
-				 *
-				 */
 				INLINE: function(obj) {
 					return this._visible.apply(obj, []);
 				}
 			},
 
 			Setter: {
-
-				/**
-				 *
-				 */
 				MEMBER: function(obj, value) {
 					if(this._strict === true && !Type.isCompatible(this._type, value)) {
 						throw new TypeError(String.format("%s is not a valid %s", value, this._type));
 					}
 					return (obj[this._setter] = value);
 				},
-
-				/**
-				 *
-				 */
 				METHOD: function(obj, value) {
 					return obj[this._setter](value);
 				},
-
-				/**
-				 *
-				 */
 				INLINE: function(obj, value) {
 					return this._setter.apply(obj, [value]);
 				}
