@@ -141,18 +141,20 @@ define(function(require) {
 		return r.toLowerCase();
 	};
 	String.escape = function (s) {
+		return JSON.stringify(s).slice(1, -1);
 		/**
 		 *
 		 * @param s
 		 * @returns
 		 */
-		return ('"' + s.replace(/(["\\])/g, '\\$1') + '"').
-			replace(/[\f]/g, "\\f").
-			replace(/[\b]/g, "\\b").
-			replace(/\n/g, "\\n").
-			replace(/[\t]/g, "\\t").
-			replace(/[\r]/g, "\\r");
+		// return ('"' + s.replace(/(["\\])/g, '\\$1') + '"').
+		// 	replace(/[\f]/g, "\\f").
+		// 	replace(/[\b]/g, "\\b").
+		// 	replace(/\n/g, "\\n").
+		// 	replace(/[\t]/g, "\\t").
+		// 	replace(/[\r]/g, "\\r");
 	};
+	String.unescape = (escapedString) => JSON.parse(`"${escapedString}"`);
 	String.escapeHtml = function(s) {
 		/**
 		 *

@@ -1,4 +1,8 @@
-### 2023/03/01 -  1.0.73
+### 2023/03/30 - 1.0.74
+
+* Introduces `locale.has()`
+
+### 2023/03/01 - 1.0.73
 
 * Introduces `js.mi` alias for `js.mixIn`
 * Fixes a bug in `js.sf` (ie. String.format) where specifiers where not handled correctly for %X.Yf like formats
