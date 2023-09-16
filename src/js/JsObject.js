@@ -16,9 +16,7 @@ define(function(require) {
 	var JsObject = Class.define;
 
 	return (JsObject = JsObject(require, {
-
 		inherits: Object,
-
 		prototype: {
 
 			'@hashCode': null,
@@ -84,7 +82,6 @@ define(function(require) {
 			    return this;
 			}
 		},
-
 		statics: {
 
 			$: references,

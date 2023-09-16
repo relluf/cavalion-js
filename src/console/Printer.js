@@ -70,7 +70,6 @@ define(function(require) {
 	});
 
 	var Printer = {
-
 		prototype: {
 			_node: null,
 
@@ -105,6 +104,8 @@ define(function(require) {
 				}
 				this._node.appendChild(line.getNode());
 				this._node.scrollTop = this._node.scrollHeight;
+				
+				return arguments.length > 1 ? arguments[1] : arguments[0];
 			}
 		}
 	};

@@ -245,6 +245,11 @@ define(function(require) {
         		onLoad(dict);
         	});
         },
+        mixIn: function(dict) {
+        	const dest = locale[locale.loc], proto = {};	
+    		dict = unwrap(js.mi(js.obj2kvp(proto), js.obj2kvp(dict)));
+    		js.mi(dest, dict);
+        },
         define: locale.define
 	};
 });
