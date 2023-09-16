@@ -1,4 +1,10 @@
-### 2023/03/30 - 1.0.74
+### 2023/06/30 - 1.0.75
+
+* Introduces locales.mixIn, prefixed.has()
+* Ensures that Printer.prottype.print returns the printed value 
+* Refactores String.escape to use JSON.stringify
+
+### 2023/06/30 - 1.0.74
 
 * Introduces `locale.has()`
 
