@@ -75,7 +75,7 @@ define(function(require) {
 			    var props = this.defineProperties();
 			    for(var k in values) {
 			        var prop = props[k];
-			        if(k) {
+			        if(prop) {
 			            prop.set(this, values[k]);
 			        }
 			    }
