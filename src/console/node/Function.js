@@ -41,7 +41,6 @@ define(function(require) {
 						.replace(/ /g, "&nbsp;")
 						.replace(/\n/g, "<br>");
 				parentNode.appendChild(div);
-
 			}
 		}
 	}));

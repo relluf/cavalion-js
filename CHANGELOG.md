@@ -1,3 +1,11 @@
+### 2024/03/24 - 1.0.77
+
+*
+
+### 2023/09/30 - 1.0.76
+
+* Fixes a solid bug, in _JsObject.prototype.setProperties()_, sure why not?
+
 ### 2023/06/30 - 1.0.75
 
 * Introduces locales.mixIn, prefixed.has()
