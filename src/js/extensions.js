@@ -17,9 +17,7 @@ define(function(require) {
 	}());
 
 	Error.chain = function(e, cause) {
-		return mixIn(e, {
-			cause: cause
-		});
+		return mixIn(e, { cause: cause });
 	};
 
 	if(Array.prototype.indexOf === undefined) {
@@ -76,6 +74,16 @@ define(function(require) {
 			Array.prototype.remove = remove;
 		}
 	}
+	if(Array.prototype.last === undefined) {
+		Array.prototype.last = function() {
+			return this[this.length - 1];
+		};
+	}
+	if(Array.prototype.first === undefined) {
+		Array.prototype.first = function() {
+			return this[0];
+		};
+	}
 	
 	Array.as = function(arrObjOrNull) {
 		if(arrObjOrNull instanceof Array) {
@@ -99,15 +107,21 @@ define(function(require) {
 		before = arr.splice(0, newIndex);
 		return before.concat([item]).concat(arr);
 	};
+	Array.fn = {
+		truthy(item) { return !!item; },
+		falsy(item) { return !item; },
+		unique(item, index, array) { return array.indexOf(item) === index; },
+		// sort()
+	};
 	
-	// if(Array.prototype.each === undefined) {
-	// 	// DUH!!! (2020-01-01)
-	// 	Array.prototype.each = Array.prototype.forEach;
-	// }
-
+	if (typeof String.prototype.startsWith !== 'function') {
+	    String.prototype.startsWith = function(s) {
+	        return this.indexOf(s) === 0;
+	    };
+	}
 	if (typeof String.prototype.endsWith !== 'function') {
-	    String.prototype.endsWith = function(suffix) {
-	        return this.indexOf(suffix, this.length - suffix.length) !== -1;
+	    String.prototype.endsWith = function(s) {
+	        return this.indexOf(s, this.length - s.length) !== -1;
 	    };
 	}
 
@@ -368,14 +382,22 @@ define(function(require) {
 		var f = _cf(l, r); 
 		return (l * f) / (r * f); 
 	};
-	Math.f = (n) => {
-		var r = js.sf("%f", n), i, dot = r.indexOf(".");
+	Math.f = (n, d) => {
+		var r = String(n), i, dot = r.indexOf(".");
+		
+		n = parseFloat(n);
+		
 		if((i = r.indexOf("0000")) > dot) {
 			return n.toFixed(i - dot - 1);
 		}
 		if((i = r.indexOf("9999")) > dot) {
 			return n.toFixed(i - dot - 1);
 		}
+		
+		if(d) {
+			return n.toFixed(d).replace(/0*$/, "").replace(/\.$/, "");
+		}
+		
 		return n;
 	};
 	Math.f_= (value, regexps) => {
@@ -392,11 +414,11 @@ define(function(require) {
 
 /*--- */
 
-	Date.prototype.getWeekNumber = function(){
-	    var d = new Date(+this);
-	    d.setHours(0, 0, 0);
-	    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-	    return Math.ceil((((d - new Date(d.getFullYear(), 0, 1))
+	Date.getWeekNumber = function(dt){
+	    dt = new Date(+dt);
+	    dt.setHours(0, 0, 0);
+	    dt.setDate(dt.getDate() + 4 - (dt.getDay() || 7));
+	    return Math.ceil((((dt - new Date(dt.getFullYear(), 0, 1))
 	    		/ 8.64e7) + 1) / 7);
 	};
 
