@@ -17,6 +17,8 @@ define(function(require) {
 	const groupBy = (arr, key) => arr.reduce((a, o) => 
 		((a[js.get(key, o)] || (a[js.get(key, o)] = []))
 			.push(o), a), {});
+			
+	const tlc = (s) => s.toLowerCase();
 
 	/*var js;*/
 	return (js = {
@@ -38,6 +40,7 @@ define(function(require) {
 		sj: JSON.stringify,//serialize.serialize,
 		pj: JSON.parse,
 		sf: String.format,
+		eval: global[tlc("EVAL")],
 		nameOf: nameOf,
 		defineClass: defineClass,
 		mixIn: mixIn, 
