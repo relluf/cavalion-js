@@ -108,6 +108,8 @@ define(function(require) {
 		return before.concat([item]).concat(arr);
 	};
 	Array.fn = {
+		nonNil(item) { return item !== null && item !== undefined; },
+		nonNull(item) { return item !== null },
 		truthy(item) { return !!item; },
 		falsy(item) { return !item; },
 		unique(item, index, array) { return array.indexOf(item) === index; },
