@@ -1,6 +1,11 @@
+### 2024/05/16 - 1.0.78
+
+* Adds Array.fn.nonNil
+* Introduces js.eval
+
 ### 2024/03/24 - 1.0.77
 
-*
+* Introduces util/Text
 
 ### 2023/09/30 - 1.0.76
 
