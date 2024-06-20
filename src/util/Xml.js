@@ -20,12 +20,17 @@ define(function() {
 	    xsltProcessor.importStylesheet(xsltDoc);
 	    var resultDoc = xsltProcessor.transformToDocument(xmlDoc);
 	    var resultXml = new XMLSerializer().serializeToString(resultDoc);
-	    return resultXml;
+	    
+	    if(resultXml.indexOf('<parsererror xmlns="http://www.w3.org/1999/xhtml" style="display: block; white-space: pre; border: 2px solid #c77; padding: 0 1em 0 1em; margin: 1em; background-color: #fdd; color: black">') !== -1) {
+	    	return sourceXml;
+	    }
+	    
+	    return resultXml.replace(/^( {2})+/gm, match => '\t'.repeat(match.length / 2));
 	};
 
     var Xml = {
-        beautify: prettifyXml,
-        beautify_(xml) {
+        beautify_2: prettifyXml,
+        beautify_1(xml) {
             var formatted = "";
             var reg = /(>)(<)(\/*)/g;
             xml = xml.replace(reg, "$1\n$2$3");
@@ -54,6 +59,9 @@ define(function() {
             });
         
             return formatted;
+        },
+        beautify(xml) {
+        	return Xml.beautify_2(Xml.beautify_1(xml));
         },
 		jsonfy(node, opts, r) {
 			if(node.getAttributeNames) {
