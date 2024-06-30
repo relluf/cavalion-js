@@ -21,7 +21,7 @@ define(function() {
 	    var resultDoc = xsltProcessor.transformToDocument(xmlDoc);
 	    var resultXml = new XMLSerializer().serializeToString(resultDoc);
 	    
-	    if(resultXml.indexOf('<parsererror xmlns="http://www.w3.org/1999/xhtml" style="display: block; white-space: pre; border: 2px solid #c77; padding: 0 1em 0 1em; margin: 1em; background-color: #fdd; color: black">') !== -1) {
+	    if(resultXml.indexOf('<parsererror ') !== -1) {
 	    	return sourceXml;
 	    }
 	    
