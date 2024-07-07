@@ -74,16 +74,16 @@ define(function(require) {
 			Array.prototype.remove = remove;
 		}
 	}
-	if(Array.prototype.last === undefined) {
-		Array.prototype.last = function() {
-			return this[this.length - 1];
-		};
-	}
-	if(Array.prototype.first === undefined) {
-		Array.prototype.first = function() {
-			return this[0];
-		};
-	}
+	// if(Array.prototype.last === undefined) {
+	// 	Array.prototype.last = function() {
+	// 		return this[this.length - 1];
+	// 	};
+	// }
+	// if(Array.prototype.first === undefined) {
+	// 	Array.prototype.first = function() {
+	// 		return this[0];
+	// 	};
+	// }
 	
 	Array.as = function(arrObjOrNull) {
 		if(arrObjOrNull instanceof Array) {
