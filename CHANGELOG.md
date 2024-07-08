@@ -1,3 +1,8 @@
+### 2024/07/07 - 1.0.79
+
+* Removes `Array.prototype.last` and -`first`
+* Improves beautifying XML sources and error detection during (uhm)
+
 ### 2024/05/16 - 1.0.78
 
 * Adds Array.fn.nonNil
