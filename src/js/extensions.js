@@ -116,6 +116,53 @@ define(function(require) {
 		// sort()
 	};
 	
+	const stringify = (obj) => (
+		Object.entries(obj).map(e => js.sf("%s=%n", e[0], 
+			js.nameOf(e[1], "compare"))).join(";"));
+	
+	Array.sortValues = function generalizedSort(a, b) {
+		if(Array.onSortValues) return Array.onSortValues(a, b);
+		
+	    // Define type priority order for consistent sorting
+	    const typeOrder = {
+	        'undefined': 0,
+	        'null': 1,
+	        'boolean': 2,
+	        'number': 3,
+	        'string': 4,
+	        'object': 5,
+	        'function': 6,
+	        'symbol': 7,
+	    };
+	
+	    // Convert null to a string "null" for consistent sorting
+	    const typeA = a === null ? 'null' : typeof a;
+	    const typeB = b === null ? 'null' : typeof b;
+	
+	    // Compare types according to priority order
+	    if (typeOrder[typeA] !== typeOrder[typeB]) {
+	        return typeOrder[typeA] - typeOrder[typeB];
+	    }
+	
+	    // Handle cases by type
+	    switch (typeA) {
+	        case 'boolean':
+	        case 'number':
+	            return a - b;
+	        case 'string':
+	            return a.localeCompare(b);
+	        case 'null':
+	        case 'undefined':
+	            return 0; // Treat null and undefined as equal
+	        case 'object':
+	            if (a === null && b === null) return 0;
+	            
+	            return stringify(a).localeCompare(stringify(b));
+	        default:
+	    }
+        return 0;
+	};
+
 	if (typeof String.prototype.startsWith !== 'function') {
 	    String.prototype.startsWith = function(s) {
 	        return this.indexOf(s) === 0;
@@ -422,6 +469,18 @@ define(function(require) {
 	    dt.setDate(dt.getDate() + 4 - (dt.getDay() || 7));
 	    return Math.ceil((((dt - new Date(dt.getFullYear(), 0, 1))
 	    		/ 8.64e7) + 1) / 7);
+	};
+	Date.format = function (dt, fmt) {
+	if(!(dt instanceof Date)) {
+			dt = new Date(dt);
+		}
+		if(fmt === "YYYY/MM/DD hh:mm") {
+			return js.sf("%d/%02d/%02d %02d:%02d", 
+				dt.getFullYear(), dt.getMonth() + 1, dt.getDate(), 
+				dt.getHours(), dt.getMinutes()	
+			);
+		}
+		return dt.toISOString();
 	};
 
 });

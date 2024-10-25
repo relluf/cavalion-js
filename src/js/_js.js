@@ -254,6 +254,7 @@ define(function(require) {
 			}
 			return obj;
 		},
+	
 		clone: function(obj) {
 			/**
 			 *

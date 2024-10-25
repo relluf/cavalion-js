@@ -1,7 +1,11 @@
 define(function() {
 	
 	String.of = function(obj) {  // TODO require("String.of")
+	try {
 		return nameOf(obj);
+	} catch(e) {
+		debugger;
+	}
 	};
 
 	var methods = (nameOf.methods = [
@@ -34,6 +38,8 @@ define(function() {
 	function nameOf(obj, hint, test) {
 		if(obj === undefined || obj === null) return String(obj);
 		
+		if(!obj.constructor) return "<Native?>";//obj;
+
 		for(var i = methods.before.length - 1, r; i >= 0; --i) {
 			if((r = methods.before[i].apply(this, arguments)) !== undefined) {
 				return test ? ["before", i, methods.before[i]] : r;
