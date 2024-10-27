@@ -24,11 +24,15 @@ define(function(require) {
 	return (js = {
 
 		// handy-dandy
-		inh: Method.callInherited,
-		inherited: Method.callInherited,
-		override: Method.override,
-		connect: Method.connect,
-		disconnect: Method.disconnect,
+		// inh: Method.callInherited,
+		// inherited: Method.callInherited,
+		
+		override: function override(obj, method, factory) {
+			obj[method] = factory(obj[method]);
+		},
+		
+		// connect: Method.connect,
+		// disconnect: Method.disconnect,
 		args2strs: Method.args2strs,
 		copy_args: Method.copy_args,
 		

@@ -2,7 +2,7 @@ define(function(require) {
 
 	var Browser = require("./Browser");
 	var singleSeperator = (str, sep) => str.split(sep).filter(_ => _).join(sep);
-
+	
 	var HtmlElement = {
 
 		defaultComputedStyleObj : {

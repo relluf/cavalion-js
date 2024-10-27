@@ -5,6 +5,7 @@ define(function(require) {
 	var ObjectNode = require("../Object");
 	var Node = require("../../Node");
 	var js = require("js");
+	var Method = require("js/Method");
 
 	return (ComponentNode = ComponentNode(require, {
 		inherits: ObjectNode,
@@ -31,12 +32,12 @@ define(function(require) {
 		statics: {
 			initialize: function() {
 				/*- FIXME Introduce some registration infra at Node */
-				js.override(Node, "create", function(value, key, NodeClass) {
+				Method.override(Node, "create", function(value, key, NodeClass) {
 					if(NodeClass === undefined && value instanceof Component) {
 						/*- Yee, use the specific Component impl */
 						return new ComponentNode(value, key);
 					}
-					return js.inherited(this, arguments);
+					return Method.callInherited(this, arguments);
 				});
 			}
 		}
