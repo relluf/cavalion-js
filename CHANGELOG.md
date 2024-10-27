@@ -1,3 +1,9 @@
+### 2024/10/25 - 1.0.80
+
+* Adds Array.sortValues 
+* Adds Date.format (USE IT! ;-)) 
+* Fixes/prepares js.nameOf() for some exotic use case with dropped files
+
 ### 2024/07/07 - 1.0.79
 
 * Removes `Array.prototype.last` and -`first`
