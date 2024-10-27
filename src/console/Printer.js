@@ -19,7 +19,7 @@ define(function(require) {
 	var DeferredNode = require("./node/Deferred");
 	var PromiseNode = require("./node/Promise");
 
-	js.override(Node, {
+	Method.override(Node, {
 		create: function(value, key, NodeClass) {
 			var line;
 	
