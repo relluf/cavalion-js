@@ -1,8 +1,5 @@
-/**
- * Keyboard.js
- */
 define(function () {
-
+	
     var specialKeys = {
         8: 'KEY_BACKSPACE',
         9: 'KEY_TAB',
@@ -65,9 +62,57 @@ define(function () {
         222: 'KEY_APOSTROPHE'
         // undefined: 'KEY_UNKNOWN'
     };
-
+    var listeners = {};
+    
+    function init() {
+    	if(init.HKM) return;
+    	
+    	init.HKM = req("util/HotkeyManager").getInstance();
+    	init.HKM.register("*", { callback(evt) { 
+    		(listeners[evt.key] || []).forEach(li => li(evt)); 
+    	} });
+    }
+    function getListeners(name) {
+    	init();
+    	
+    	if(!listeners[name]) {
+    		listeners[name] = [];
+    	}
+    	return listeners[name];
+    }
+    
     return {
-    	// keys: specialKeys,
+    	keys: specialKeys,
+    	listeners: listeners,
+    	
+    	on(name, listener) {
+    		if(name.includes(":")) {
+    			const li = listener;
+    			
+    			const types = name.split(":");
+    			name = types.pop();
+    			
+    			listener = (evt) => {
+    				if(types.includes(evt.type)) {
+    					return li(evt);
+    				}
+    			};
+    		}
+    		
+    		const listeners = getListeners(name);
+    		listeners.push(listener);
+    		return listener;
+    	},
+    	once(name, listener) {
+    		this.on(name, listener);
+			this.on(name, () => this.un(name, listener));
+			return listener;
+    	},
+    	un(name, listener) {
+    		const listeners = getListeners(name);
+    		listeners.splice(listeners.indexOf(listener), 1);
+    		return listener;
+    	},
     	
         getKeyNames: function () {
             var r;
