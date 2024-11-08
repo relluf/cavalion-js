@@ -1,4 +1,8 @@
-### 2024/10/25 - 1.0.80
+### 2024/11/08 - 1.0.82
+
+* Service build in favor of cavalion-code
+
+### 2024/11/01 - 1.0.81
 
 * Adds Array.sortValues 
 * Adds Date.format (USE IT! ;-)) 
