@@ -2222,9 +2222,4 @@ diff_match_patch.patch_obj.prototype.toString = function() {
 return diff_match_patch;
 });
 
-define(function(require) {
-	
-	const dmp = require("diff-match-patch");
-	
-	return { dmp: dmp }
-})
+define(["diff-match-patch"], (dmp) => ({ dmp: dmp }));
