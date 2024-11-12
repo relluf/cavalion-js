@@ -471,16 +471,23 @@ define(function(require) {
 	    		/ 8.64e7) + 1) / 7);
 	};
 	Date.format = function (dt, fmt) {
-	if(!(dt instanceof Date)) {
+		if(!(dt instanceof Date)) {
 			dt = new Date(dt);
 		}
-		if(fmt === "YYYY/MM/DD hh:mm") {
-			return js.sf("%d/%02d/%02d %02d:%02d", 
-				dt.getFullYear(), dt.getMonth() + 1, dt.getDate(), 
-				dt.getHours(), dt.getMinutes()	
-			);
+		const formatter = Date.format.formats[fmt];
+		
+		if(typeof formatter === "function") {
+			return formatter(dt, fmt);
 		}
-		return dt.toISOString();
+		
+		return "unknown format " + fmt + " (" + dt.toISOString() + ")";
+	};
+	Date.format.formats = {
+		'YYYY/MM/DD hh:mm': (dt, fmt) => js.sf("%d/%02d/%02d %02d:%02d", 
+				dt.getFullYear(), dt.getMonth() + 1, dt.getDate(), 
+				dt.getHours(), dt.getMinutes()),
+		'YYYY/MM/DD': (dt, fmt) => js.sf("%d/%02d/%02d", 
+				dt.getFullYear(), dt.getMonth() + 1, dt.getDate())
 	};
 
 });
