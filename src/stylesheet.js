@@ -1,5 +1,7 @@
 define(function() {
-	
+
+	var timeout;
+
    return {
         load: function (name, req, onLoad, config) {
         	if(typeof document !== "undefined") {
@@ -20,9 +22,17 @@ define(function() {
 	    				if(less.sheets.indexOf(link) === -1) {
 							less.sheets.push(link);
 	    				}
-						// TODO how to only refresh this current one?
-						less.refresh(true).then(_ => onLoad(link));
-						// onLoad(link);
+
+	    				if(timeout) {
+	    					window.clearTimeout(timeout);
+	    				}
+
+	    				timeout = window.setTimeout(() => {
+							// TODO how to only refresh the current one?
+							less.refresh(true)
+	    				}, 2750);
+	    				
+	    				onLoad(link);
 					});	
 	    		}
         	} else {

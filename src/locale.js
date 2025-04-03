@@ -11,8 +11,12 @@ define(function(require) {
 		var locale = require("locale");
 		locale.set("du-NL");
 	*/
+	
+	// const trace = [];
 
 	function locale(id) {
+		// if(typeof id === "string") trace.push(id);
+		
     	var loc = locale.loc;//arguments.callee.loc;
 
     	function resolve(id) {
@@ -93,7 +97,6 @@ define(function(require) {
     	
     	var r;
     	if(id instanceof Array) { // #CVLN-202209091-1
-    		// r = resolve(id.join(""));
     		var id_ = id.join("");
     		r = locale[loc][id.join("")];
     		while(r === undefined && id.length > 1) {
@@ -214,6 +217,7 @@ define(function(require) {
 
 	return {
 		locale: locale,
+		// trace: trace,
 		
 		prefixed: locale.prefixed,
 		module: function(module) {

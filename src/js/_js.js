@@ -88,19 +88,21 @@ define(function(require) {
 			 * @returns
 			 */
 			var root = (obj = obj || global);
-			if(typeof name === "string") name = name.split(".");
+			if (typeof name === "string") {
+				name = name.split(/(?<!\\)\./).map(part => part.replace(/\\\./g, ".")); // Split by unescaped dots, replace escaped dots
+			}
 			
-			for( var i = 0, l = name.length - 1; i < l; ++i) {
+			for (var i = 0, l = name.length - 1; i < l; ++i) {
 				obj = obj[name[i]];
-				if(obj === null || obj === undefined || (typeof obj !== "object" && typeof obj !== "function")) {
+				if (obj === null || obj === undefined || (typeof obj !== "object" && typeof obj !== "function")) {
 					return defaultValue !== undefined ? js.set(name.join("."), defaultValue, root) : undefined;
 				}
 			}
-
-			if(defaultValue !== undefined && obj[name[l]] === undefined) {
+			
+			if (defaultValue !== undefined && obj[name[l]] === undefined) {
 				return js.set(name.join("."), defaultValue, root);
 			}
-
+			
 			return obj[name[l]];
 		},
 		set: function(name, value, obj) {
@@ -111,16 +113,17 @@ define(function(require) {
 			 * @param obj
 			 * @returns
 			 */
-			obj = obj || global;
-			name = name.split(".");
-			for( var i = 0, l = name.length - 1; i < l; ++i) {
-				if(obj[name[i]] === undefined) {
-					obj[name[i]] = {};
-				}
-				obj = obj[name[i]];
-			}
-
-			return (obj[name[name.length - 1]] = value);
+		    obj = obj || global;
+		    name = name.split(/(?<!\\)\./).map(part => part.replace(/\\\./g, ".")); // Handle escaped dots properly
+		
+		    for (var i = 0, l = name.length - 1; i < l; ++i) {
+		        if (obj[name[i]] === undefined) {
+		            obj[name[i]] = {};
+		        }
+		        obj = obj[name[i]];
+		    }
+		
+		    return (obj[name[name.length - 1]] = value);
 		},
 		normalize: function(base, uri, first) {
 			/**

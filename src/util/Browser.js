@@ -156,7 +156,7 @@ define(function(require) {
 		_: BrowserDetect
 	};
 
-	Browser.webkit = Browser.safari || Browser.chrome;
+	Browser.webkit = Browser.chrome;
 	Browser.firefox = Browser.mozilla;
 
 	return Browser;

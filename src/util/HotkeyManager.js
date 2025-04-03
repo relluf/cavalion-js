@@ -6,10 +6,10 @@ define(function(require) {
     var Keyboard = require("./Keyboard");
 
 	function checkAndCall(li, evt, type) {
-		if((!li.hasOwnProperty("type") || li.type === "*" || li.type === type) 
-		    && (!li.hasOwnProperty("modifiers") || Event.modifiersMatch(evt, 
-		    li.modifiers)) && (typeof li.isEnabled !== "function" || 
-		    li.isEnabled(evt, type))
+		if(
+			(!li.hasOwnProperty("type") || li.type === "*" || li.type === type) && 
+			(!li.hasOwnProperty("modifiers") || Event.modifiersMatch(evt, li.modifiers)) && 
+			(typeof li.isEnabled !== "function" || li.isEnabled(evt, type))
         ) {
             return li.callback(evt, type);
 		}

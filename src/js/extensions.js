@@ -107,6 +107,14 @@ define(function(require) {
 		before = arr.splice(0, newIndex);
 		return before.concat([item]).concat(arr);
 	};
+	Array.moveItem = function(array, from, to) {
+	    if (from < 0 || from >= array.length || to < 0 || to >= array.length) {
+	        console.error("Invalid indices");
+	        return;
+	    }
+	    const [item] = array.splice(from, 1); // Remove item from 'from' index
+	    array.splice(to, 0, item); // Insert item at 'to' index
+	};
 	Array.fn = {
 		nonNil(item) { return item !== null && item !== undefined; },
 		nonNull(item) { return item !== null },

@@ -1,11 +1,11 @@
 define(function() {
 	
 	String.of = function(obj) {  // TODO require("String.of")
-	try {
-		return nameOf(obj);
-	} catch(e) {
-		debugger;
-	}
+		try {
+			return nameOf(obj);
+		} catch(e) {
+			debugger;
+		}
 	};
 
 	var methods = (nameOf.methods = [
@@ -14,6 +14,8 @@ define(function() {
 		(obj) => (obj.naam || obj.omschrijving || obj.code || obj.name || obj.description),
 		(obj) => (obj.Naam || obj.Omschrijving || obj.Code || obj.Name || obj.Description),
 		(obj) => (obj.Titel || obj.titel || obj.Title || obj.title),
+		(obj) => { if(obj.status && obj.statusText) return js.sf("%s - %s", obj.status, obj.statusText); }
+		
 		// (obj) => {
 		// 	var s = (obj.id || obj.Id || obj.ID) ||
 		// 		(obj.naam || obj.omschrijving || obj.code || obj.name || obj.description) ||
@@ -22,6 +24,7 @@ define(function() {
 				
 		// 	return typeof s === "string" ? s : undefined;
 		// }
+		
 	]);
 
 	methods.before = [];
