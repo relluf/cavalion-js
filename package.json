@@ -1,6 +1,6 @@
 {
   "name": "cavalion-js",
-  "version": "1.0.82",
+  "version": "1.0.83",
   "description": "Cavalion common JavaScript library",
   "main": "index.js",
   "scripts": {

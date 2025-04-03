@@ -1,3 +1,9 @@
+### 2025/04/03 - 1.0.83
+
+* Introduces Array.moveItem 
+* Updates js.set to handle escaped dots properly 
+* Adds a delay of 2750ms before refresing LESS definitions
+
 ### 2024/11/08 - 1.0.82
 
 * Service build in favor of cavalion-code
