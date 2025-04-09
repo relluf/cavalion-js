@@ -20,60 +20,61 @@ define(function(require) {
 		return mixIn(e, { cause: cause });
 	};
 
-	if(Array.prototype.indexOf === undefined) {
+	// if(Array.prototype.indexOf === undefined) {
 
-		/**
-		 *
-		 * @param element
-		 * @returns {Number}
-		 */
-		Array.prototype.indexOf = function(element) {
-			for(var i = 0, l = this.length; i < l; ++i) {
-				if(this[i] === element) {
-					return i;
-				}
-			}
-			return -1;
-		};
-		//console.debug("Array.prototype.indexOf declared");
-	}
-	if(Array.prototype.forEach === undefined) {
-		var thiz = this;
+	// 	/**
+	// 	 *
+	// 	 * @param element
+	// 	 * @returns {Number}
+	// 	 */
+	// 	Array.prototype.indexOf = function(element) {
+	// 		for(var i = 0, l = this.length; i < l; ++i) {
+	// 			if(this[i] === element) {
+	// 				return i;
+	// 			}
+	// 		}
+	// 		return -1;
+	// 	};
+	// 	//console.debug("Array.prototype.indexOf declared");
+	// }
+	// if(Array.prototype.forEach === undefined) {
+	// 	var thiz = this;
 
-		/**
-		 *
-		 * @param f
-		 * @param this_
-		 */
-		Array.prototype.forEach = function(f, this_) {
-			for(var i = 0, l = this.length; i < l; ++i) {
-				f.apply(this_ || thiz, [this[i], i, this]);
-			}
-		};
-		//console.debug("Array.prototype.forEach declared");
-	}
-	if(Array.prototype.remove === undefined) {
+	// 	/**
+	// 	 *
+	// 	 * @param f
+	// 	 * @param this_
+	// 	 */
+	// 	Array.prototype.forEach = function(f, this_) {
+	// 		for(var i = 0, l = this.length; i < l; ++i) {
+	// 			f.apply(this_ || thiz, [this[i], i, this]);
+	// 		}
+	// 	};
+	// 	//console.debug("Array.prototype.forEach declared");
+	// }
+	// if(Array.prototype.remove === undefined) {
 
-		/**
-		 *
-		 * @param obj
-		 * @returns
-		 */
-		function remove(obj) {
-			var i = this.indexOf(obj);
-			return i !== -1 ? this.splice(i, 1)[0] : undefined;
-		}
+	// 	/**
+	// 	 *
+	// 	 * @param obj
+	// 	 * @returns
+	// 	 */
+	// 	function remove(obj) {
+	// 		var i = this.indexOf(obj);
+	// 		return i !== -1 ? this.splice(i, 1)[0] : undefined;
+	// 	}
 
-		if(Object.create) {
-			Array.prototype = Object.create(Array, {
-				remove: {
-					value: remove
-				}
-			});
-		} else {
-			Array.prototype.remove = remove;
-		}
-	}
+	// 	if(Object.create) {
+	// 		Array.prototype = Object.create(Array, {
+	// 			remove: {
+	// 				value: remove
+	// 			}
+	// 		});
+	// 	} else {
+	// 		Array.prototype.remove = remove;
+	// 	}
+	// 	console.debug("Array.prototype.remove declared");
+	// }
 	// if(Array.prototype.last === undefined) {
 	// 	Array.prototype.last = function() {
 	// 		return this[this.length - 1];
@@ -106,14 +107,6 @@ define(function(require) {
 		var item = arr.splice(oldIndex, 1)[0];
 		before = arr.splice(0, newIndex);
 		return before.concat([item]).concat(arr);
-	};
-	Array.moveItem = function(array, from, to) {
-	    if (from < 0 || from >= array.length || to < 0 || to >= array.length) {
-	        console.error("Invalid indices");
-	        return;
-	    }
-	    const [item] = array.splice(from, 1); // Remove item from 'from' index
-	    array.splice(to, 0, item); // Insert item at 'to' index
 	};
 	Array.fn = {
 		nonNil(item) { return item !== null && item !== undefined; },
