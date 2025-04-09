@@ -390,6 +390,23 @@ define(function(require) {
 			 */
 			return window.clearTimeout(id);
 		},
+		setInterval: function(f, ms) {
+			/**
+			 *
+			 * @param f
+			 * @param ms
+			 * @returns
+			 */
+			return window.setInterval(f, ms);
+		},
+		clearInterval: function(id) {
+			/**
+			 *
+			 * @param id
+			 * @returns
+			 */
+			return window.clearInterval(id);
+		},
 		waitAll: function(/* ... */) {
 			return Promise.all(js.copy_args(arguments).flat().map(p => {
 				if(typeof p === "string" && p.endsWith("ms")) { // for syntax/code that says it all
