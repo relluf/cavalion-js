@@ -3,7 +3,6 @@ define(function(require) {
 	var Command = require("../util/Command");
 	var ExpressionBuilder = require("./ExpressionBuilder");
 	var Instance = require("./Instance");
-	var ajax = require("jquery").ajax;
 
 	var IS_KEYFIELD_REGEXP = /\.id$/;
 	
@@ -215,19 +214,31 @@ define(function(require) {
 		    }
 		    
         	var d = new Deferred();
-		    ajax({
-		        url: String.format("%srest/entities/%s", prefix || this.prefix, entity),
-		        method: "GET",
-		        contentType: "application/json",
-		        data: getViewData(from, attributes, criteria),
-		        success: function (res) {
-					me.processQueryResult(res, req, params.unit, criteria);
-					d.callback(res);
-		        },
-		        error: function (res) {
-		            d.errback(res);
-		        }
-		    });
+        	
+		fetch(
+			(prefix || this.prefix) + "rest/entities/" + entity + "?" +
+			new URLSearchParams(getViewData(from, attributes, criteria)),
+			{
+				method: "GET",
+				headers: { "Content-Type": "application/json" }
+			}
+		).then(res => res.json())
+		 .then(res => { me.processQueryResult(res, req, params.unit, criteria); d.callback(res); })
+		 .catch(res => d.errback(res));
+ 
+			// ajax({
+		 //       url: String.format("%srest/entities/%s", prefix || this.prefix, entity),
+		 //       method: "GET",
+		 //       contentType: "application/json",
+		 //       data: getViewData(from, attributes, criteria),
+		 //       success: function (res) {
+			// 		me.processQueryResult(res, req, params.unit, criteria);
+			// 		d.callback(res);
+		 //       },
+		 //       error: function (res) {
+		 //           d.errback(res);
+		 //       }
+		 //   });
 		    return d;
 		},
 		processQueryResult: function(res, req, namespace, criteria) {
