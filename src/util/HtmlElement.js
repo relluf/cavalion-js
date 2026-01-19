@@ -89,6 +89,30 @@ define(function(require) {
 				HtmlElement.addClass(node, className);
 			}
 		},
+
+		syncClasses: function(node, classes, values) {
+			/*- The syncClasses method synchronizes the presence of specified CSS classes on an element based on corresponding boolean values or functions. 
+				**Parameters**:
+					- classes (Array of Strings): An array of class names to be synchronized.
+					- values (Array of Booleans/Functions): An array where each value determines whether the corresponding class should be present. If a function is provided, it is called with the element, class name, and current presence of the class, and should return a boolean.
+				**Returns** (Boolean): true if any class was added or removed; otherwise, false. */
+			let changed = [];
+			values.map((v, i) => {
+				const cl = classes[i];
+				const has = this.hasClass(node, cl);
+				const should = typeof v === "function" ? v(this, cl, has) : !!v;
+				
+				if(has && !should) {
+					this.removeClass(node, cl);
+					changed.push(cl);
+				} else if(!has && should) {
+					this.addClass(node, cl);
+					changed.push(cl);
+				}
+			});
+			return changed;
+		},
+
 		hasParent : function(node, parentNode) {
 			node = node.parentNode;
 			while (node !== null && node !== parentNode) {
