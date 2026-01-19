@@ -4,7 +4,8 @@ define(function(require) {
 	var CIRCULAR_REFERENCE	= { toString: function() { return "CIRCULAR_REFERENCE"; }};
 	var TOO_DEEP			= { toString: function() { return "TOO_DEEP"; }};
 
-	Date.prototype.serializeJson = function() {
+	var Date_prototype_serializeJson = function() {
+		console.warn("Date serialization - still needed");
 		return "" + this.getTime();
 	};
 
@@ -13,17 +14,19 @@ define(function(require) {
 			"implements,label,let,new,package,return,super,switch," +
 			"this,throw,try,typeof,var,void,while,with,yield").split(",");
 
-	var serialize = {
-		isKeyword: function(word) {
-			return keywords.indexOf(word) !== -1;
-		},
-		keyNeedsEscape: function(key) {
-			var m = /^[A-Za-z_][A-Za-z_0-9]*$/.exec(key);
-			if(m === null) {
-				return true;
-			}
-			return serialize.isKeyword(key);
-		},
+	function isKeyword(word) {
+		return keywords.indexOf(word) !== -1;
+	}
+	function keyNeedsEscape(key) {
+		var m = /^[A-Za-z_][A-Za-z_0-9]*$/.exec(key);
+		if(m === null) {
+			return true;
+		}
+		return serialize.isKeyword(key);
+	}
+	
+	var serialize_ = {
+		isKeyword, keyNeedsEscape,
 		serialize: function (obj, indent, objs, depth) {
 			var pushed = false;
 			try {
@@ -86,6 +89,8 @@ define(function(require) {
 			    }
 			    if(obj.serializeJson) {
 			    	return obj.serializeJson();
+			    } else if(obj instanceof Date) {
+			    	return Data_prototype_serializeJson.apply(obj, []);
 			    }
 			    var me = arguments.callee, res, val;
 			    if (obj instanceof Array) {
@@ -137,7 +142,81 @@ define(function(require) {
 			}
 		}
 	};
+	// return serialize_;
 
-	return serialize;
+	// 2025/11/01
+	function serialize(value) {
+		const seen = new Map();
+		const path = [];
+	
+		function encode(val) {
+			if (val === null || typeof val !== 'object') return val;
+	
+			if (seen.has(val)) {
+				return { $ref: seen.get(val).join('.') };
+			}
+	
+			seen.set(val, [...path]);
+	
+			if (Array.isArray(val)) {
+				path.push(null);
+				const arr = val.map((v, i) => {
+					path[path.length - 1] = i;
+					return encode(v);
+				});
+				path.pop();
+				return arr;
+			}
+	
+			const obj = {};
+			for (const key of Object.keys(val)) {
+				path.push(key);
+				obj[key] = encode(val[key]);
+				path.pop();
+			}
+			return obj;
+		}
+	
+		return JSON.stringify(encode(value), null, 2);
+	}
+	function deserialize(json) {
+		const data = JSON.parse(json);
+		const refs = [];
+	
+		function build(val, root, path = []) {
+			if (val && typeof val === 'object') {
+				if ('$ref' in val) {
+					refs.push({ target: root, path, refPath: val.$ref });
+					return undefined;
+				}
+				if (Array.isArray(val)) {
+					return val.map((v, i) => build(v, root, path.concat(i)));
+				}
+				const obj = {};
+				for (const key of Object.keys(val)) {
+					obj[key] = build(val[key], root, path.concat(key));
+				}
+				return obj;
+			}
+			return val;
+		}
+	
+		function resolve(obj, path) {
+			return path.split('.').reduce((acc, k) => acc[k], obj);
+		}
+	
+		const root = build(data, data);
+	
+		// Patch all references after the first pass
+		for (const { target, path, refPath } of refs) {
+			const container = path.slice(0, -1).reduce((a, k) => a[k], target);
+			const key = path[path.length - 1];
+			container[key] = resolve(root, refPath);
+		}
+	
+		return root;
+	}
+
+	return { serialize, deserialize, isKeyword, keyNeedsEscape };
 
 });

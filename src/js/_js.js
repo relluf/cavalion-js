@@ -14,9 +14,14 @@ define(function(require) {
     const JsObject = require("./JsObject");
 
     const js_ctx_key = "[[js.ctx]]";
-	const groupBy = (arr, key) => arr.reduce((a, o) => 
-		((a[js.get(key, o)] || (a[js.get(key, o)] = []))
-			.push(o), a), {});
+	const groupBy = (arr, key) => {
+		
+		if(typeof key === "function") {
+			return arr.reduce((a, o) => ((a[key(o)] || (a[key(o)] = [])).push(o), a), {});
+		}
+
+		return arr.reduce((a, o) => ((a[js.get(key, o)] || (a[js.get(key, o)] = [])).push(o), a), {});
+	};
 			
 	const tlc = (s) => s.toLowerCase();
 
@@ -41,8 +46,8 @@ define(function(require) {
 		b: beautify,
 		m: minify, mi: mixIn,
 		n: nameOf,
-		sj: JSON.stringify,//serialize.serialize,
-		pj: JSON.parse,
+		sj: serialize.serialize, //JSON.stringify,
+		pj: serialize.deserialize, //JSON.parse,
 		sf: String.format,
 		eval: global[tlc("EVAL")],
 		nameOf: nameOf,
@@ -80,6 +85,8 @@ define(function(require) {
 		},
 		
 		get: function(name, obj, defaultValue) {
+			if(name === ".") return obj; 
+			
 			/**
 			 *
 			 * @param name

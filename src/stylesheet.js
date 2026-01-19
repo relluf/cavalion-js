@@ -2,7 +2,7 @@ define(function() {
 
 	var timeout;
 
-   return {
+	return {
         load: function (name, req, onLoad, config) {
         	if(typeof document !== "undefined") {
 	    		var link = document.createElement("link");
@@ -29,7 +29,7 @@ define(function() {
 
 	    				timeout = window.setTimeout(() => {
 							// TODO how to only refresh the current one?
-							less.refresh(true)
+							less.refresh(true);
 	    				}, 2750);
 	    				
 	    				onLoad(link);
@@ -40,6 +40,6 @@ define(function() {
         		onLoad(name);
         	}
         }
-   };
+  };
     
 });

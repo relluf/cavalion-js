@@ -159,5 +159,24 @@ define(function(require) {
 	Browser.webkit = Browser.chrome;
 	Browser.firefox = Browser.mozilla;
 
+
+// The following hack is only necessary in Chrome
+
+// Browser.chrome && setInterval(() => {
+	
+// 	document.body.querySelectorAll("iframe")
+// 		.forEach(n => {
+// 			const h = n.style.height;
+// 			if(h) {
+// 				n.style.height = js.sf("%spx", parseInt(h) + 1);
+// 				setTimeout(() => n.style.height = h, 0);
+// 			} else {
+// 				n.style.height = "101%";
+// 				setTimeout(() => n.style.height = "", 0);
+// 			}
+// 		});
+
+// }, 125);
+
 	return Browser;
 });
