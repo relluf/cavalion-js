@@ -35,6 +35,10 @@ define([], (Clipboard) => {
     return (Clipboard = {
         onCopy,
         onPaste,
+        
+        getText: () => Clipboard.paste(),
+        setText: (text) => Clipboard.copy(text),
+        
         copy: (text) => {
             // If no text is provided, return the result of paste()
             if (typeof text === 'undefined') {
@@ -84,10 +88,11 @@ define([], (Clipboard) => {
                 return Promise.reject(new DOMException('The request is not allowed', 'NotAllowedError'));
             }
         },
-        paste: () => {
+        paste: (cb) => {
             // Use the Async Clipboard API when available
             if (navigator.clipboard) {
                 return navigator.clipboard.readText().then((text) => {
+                	cb && cb(text);
                     notifyListeners('paste', text); // Notify listeners on successful paste
                     return text;
                 }).catch(err => {
@@ -109,6 +114,7 @@ define([], (Clipboard) => {
                 document.body.removeChild(textarea);
 
                 if (success) {
+                    if(cb) cb(text);
                     notifyListeners('paste', text); // Notify listeners on successful paste
                     resolve(text);
                 } else {
