@@ -7,13 +7,15 @@ define(function() {
 			debugger;
 		}
 	};
-
+	
 	var methods = (nameOf.methods = [
-		(obj) => (obj.id || obj.Id || obj.ID),
-		(obj) => (obj.opmerking || obj.Opmerking),
-		(obj) => (obj.naam || obj.omschrijving || obj.code || obj.name || obj.description),
-		(obj) => (obj.Naam || obj.Omschrijving || obj.Code || obj.Name || obj.Description),
-		(obj) => (obj.Titel || obj.titel || obj.Title || obj.title),
+		(obj) => (obj, obj.id || obj.Id || obj.ID),
+		(obj) => (obj, obj.opmerking || obj.Opmerking),
+		(obj) => (obj, obj.naam || obj.omschrijving || obj.code || obj.name || 
+			obj.label || obj.description),
+		(obj) => (obj, obj.Naam || obj.Omschrijving || obj.Code || obj.Name || 
+			obj.label || obj.Description),
+		(obj) => (obj, obj.Titel || obj.titel || obj.Title || obj.title),
 		(obj) => { if(obj.status && obj.statusText) return js.sf("%s - %s", obj.status, obj.statusText); }
 		
 		// (obj) => {
@@ -22,6 +24,12 @@ define(function() {
 		// 		(obj.Naam || obj.Omschrijving || obj.Code || obj.Name || obj.Description) ||
 		// 		(obj.Titel || obj.titel || obj.Title || obj.title);
 				
+				// o - obj being namedOf
+				// v - value representing obj
+				// returns js.nameOf(v) if it is object and not equal to o
+				// TODO prevent circular/recursive calls
+				// const f = (o, v) => typeof v === "object" ? v !== o ? js.nameOf(v) : v : v;
+			
 		// 	return typeof s === "string" ? s : undefined;
 		// }
 		
@@ -41,7 +49,7 @@ define(function() {
 	function nameOf(obj, hint, test) {
 		if(obj === undefined || obj === null) return String(obj);
 		
-		if(!obj.constructor) return "<Native?>";//obj;
+		if(!obj.constructor) return "<Native<?>>";//obj;
 
 		for(var i = methods.before.length - 1, r; i >= 0; --i) {
 			if((r = methods.before[i].apply(this, arguments)) !== undefined) {
