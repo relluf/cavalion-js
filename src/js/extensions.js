@@ -117,52 +117,68 @@ define(function(require) {
 		// sort()
 	};
 	
-	const stringify = (obj) => (
-		Object.entries(obj).map(e => js.sf("%s=%n", e[0], 
-			js.nameOf(e[1], "compare"))).join(";"));
 	
-	Array.sortValues = function generalizedSort(a, b) {
-		if(Array.onSortValues) return Array.onSortValues(a, b);
+	if (!Array.sortValues) {
+	
+		// Define priority for type-based sorting
+		const TYPE_ORDER = {
+			'undefined': 0,
+			'null': 1,
+			'boolean': 2,
+			'number': 3,
+			'string': 4,
+			'object': 5,
+			'function': 6,
+			'symbol': 7,
+		};
+	
+const stringify = (obj) => {
+	try {
+		return Object.entries(obj)
+			.map(e => js.sf("%s=%n", e[0], js.nameOf(e[1], "compare")))
+			.join(";");
+	} catch (err) {
+		console.warn("stringify error:", err, obj);
+		return String(obj);
+	}
+};
 		
-	    // Define type priority order for consistent sorting
-	    const typeOrder = {
-	        'undefined': 0,
-	        'null': 1,
-	        'boolean': 2,
-	        'number': 3,
-	        'string': 4,
-	        'object': 5,
-	        'function': 6,
-	        'symbol': 7,
-	    };
+		const retval = (n) => n < 0 ? -1 : n > 0 ? 1 : 0;
+
+		// Generalized sort function with type-aware ordering
+		Array.sortValues = function generalizedSort(a, b) {
+			if (Array.onSortValues) return Array.onSortValues(a, b);
 	
-	    // Convert null to a string "null" for consistent sorting
-	    const typeA = a === null ? 'null' : typeof a;
-	    const typeB = b === null ? 'null' : typeof b;
+			const typeA = a === null ? 'null' : typeof a;
+			const typeB = b === null ? 'null' : typeof b;
+			
+			if(a instanceof Array && b instanceof Array) {
+				return a.length - b.length;
+			}
 	
-	    // Compare types according to priority order
-	    if (typeOrder[typeA] !== typeOrder[typeB]) {
-	        return typeOrder[typeA] - typeOrder[typeB];
-	    }
+			// Sort by type priority if types differ
+			if (TYPE_ORDER[typeA] !== TYPE_ORDER[typeB]) {
+				return retval(TYPE_ORDER[typeA] - TYPE_ORDER[typeB]);
+			}
 	
-	    // Handle cases by type
-	    switch (typeA) {
-	        case 'boolean':
-	        case 'number':
-	            return a - b;
-	        case 'string':
-	            return a.localeCompare(b);
-	        case 'null':
-	        case 'undefined':
-	            return 0; // Treat null and undefined as equal
-	        case 'object':
-	            if (a === null && b === null) return 0;
-	            
-	            return stringify(a).localeCompare(stringify(b));
-	        default:
-	    }
-        return 0;
-	};
+			// Sort within same type
+			switch (typeA) {
+				case 'boolean':
+				case 'number':
+					return retval(a - b);
+				case 'string':
+					return a.localeCompare(b);
+				case 'null':
+				case 'undefined':
+					return 0;
+				case 'object':
+					return stringify(a).localeCompare(stringify(b));
+				default:
+					console.warn("Unhandled type in sortValues:", typeA);
+					return 0;
+			}
+		};
+	}
 
 	if (typeof String.prototype.startsWith !== 'function') {
 	    String.prototype.startsWith = function(s) {
@@ -433,21 +449,22 @@ define(function(require) {
 		return (l * f) / (r * f); 
 	};
 	Math.f = (n, d) => {
-		var r = String(n), i, dot = r.indexOf(".");
-		
-		n = parseFloat(n);
-		
-		if((i = r.indexOf("0000")) > dot) {
-			return n.toFixed(i - dot - 1);
-		}
-		if((i = r.indexOf("9999")) > dot) {
-			return n.toFixed(i - dot - 1);
-		}
-		
-		if(d) {
-			return n.toFixed(d).replace(/0*$/, "").replace(/\.$/, "");
-		}
-		
+		if(!isNaN(n)) {
+			var r = String(n), i, dot = r.indexOf(".");
+			
+			n = parseFloat(n);
+			
+			if((i = r.indexOf("0000")) > dot) {
+				return n.toFixed(i - dot - 1);
+			}
+			if((i = r.indexOf("9999")) > dot) {
+				return n.toFixed(i - dot - 1);
+			}
+			
+			if(d) {
+				return n.toFixed(d).replace(/0*$/, "").replace(/\.$/, "");
+			}
+		}			
 		return n;
 	};
 	Math.f_= (value, regexps) => {
