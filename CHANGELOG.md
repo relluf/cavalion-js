@@ -1,3 +1,53 @@
+### `2026/03/16` 1.0.85 Formatting and entity expansion updates
+
+**console/node/vcl/Component.js**:
+
+* Adds root-component console rendering with `uri#hashCode`
+* Keeps non-root `Component` labels unchanged; still shows `:root` and `:selected` markers.
+* **Breaking**: code using `expand.Entity(...)` must migrate to `expand.newEntity(...)`.
+
+**entities/expand.js**:
+
+* Renames `expand.Entity` to `expand.newEntity` in 
+* Adds `expand.DefaultEntity` for generic alias-based `join()` and `expand()` behavior.
+* Improves `expand.attributes4()` fallback handling for unknown entity relations and single-item tuple paths.
+* Extends `prefixId()` to preserve `count:id` selectors without prepending `id,`.
+
+**js/_js.js**:
+
+* Adds `js.qq(a, b)` for nullish fallback values.
+* Fixes `String.format()` width and padding behavior for `%d`, including negative zero-padded numbers.
+* Fixes `String.format()` float formatting for `%f`, including width, precision, and negative values.
+* Fixes string alignment in `String.format()` for `%s`/`%H`/`%n`; left/right padding now behaves consistently.
+* Improves `%` specifier parsing to stop safely at end-of-format input.
+* Adjusts numeric formatting to return the original positive value when fixed `"0000"` formatting collapses to `"0"`.
+
+**locale.js**:
+
+* Adds `locale.prefixed(...).prefixed(...)` chaining in `src/locale.js`.
+* Fixes prefixed locale fallback output so missing keys do not duplicate the prefix.
+
+
+### `2026/02/05` Introducing entities.expand
+
+It turns `expand.js` from a small “string builder” helper into a mini expansion/join framework.
+
+* **Before:** the module essentially returned a function that, given an attribute (or list of attributes) plus a `path`, produced strings like `path.attr`, with some support for comma lists, aliases (`"id foo"`), and typed prefixes (`"Type:attr"`). Arrays were turned into a **comma-joined string**.
+
+* **Now:** it exports a reusable `expand(expanderFn, as, path)` function plus an **`Entity` factory** (`expand.Entity(...)`) that builds an object representing an entity with:
+
+  * **Named expanders** generated from a `paths` map (so you can call `Entity.bedrijf("id")` and get `meetpunt.onderzoek.bedrijf.id`).
+  * A **`join(alias, attributes)`** method that resolves a join alias (case-insensitive) to one of those expanders via a mapping; unknown aliases now **throw an error**.
+  * An **`expand(...)`** convenience method that expands multiple attributes using `expand.attributes4(...)`.
+
+* **Normalization changes:**
+
+  * Comma-separated strings are split and **trimmed**.
+  * If `as` is an array, it maps each item through the expander and returns an **array** (not a comma-joined string).
+  * There’s a helper that **auto-prefixes `"id"`** (e.g., ensures `"id"` is included in expansions) and supports mixed input shapes (strings and `[expanderName, attrs]` tuples).
+
+Overall, it standardizes how “expand fields” and “join expansions” are defined and executed, moving from ad-hoc string concatenation to an entity-centric API with explicit alias resolution and stricter error handling.
+
 ### `2026/01/18` - 1.0.84
 
 EM now uses the browser’s fetch API instead of jQuery. 
