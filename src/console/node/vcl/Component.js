@@ -16,17 +16,25 @@ define(function(require) {
 				/** @overrides ../Node.prototype.initializeValue */
 				// node.innerHTML = String.format("%H<span class='uri'> - %H</span>",
 				// 		js.nameOf(this._value), this._value.getUri());
-				var root = this._value.isRootComponent() ? ":root" : "";
+				var isRoot = this._value.isRootComponent();
+				var root = isRoot ? ":root" : "";
 				var uri = this._value._uri;//this._value.isRootComponent() ? this._value._uri : this._value.getUri();
 				if(uri !== this._value.getUri()) {
 					uri = js.sf("%s - %s", uri, this._value.getUri());
 				}
-				
+
 				var selected = this._value.isSelected && this._value.isSelected() ? ":selected" : "";
-				node.innerHTML = String.format(
-						"%H<span class='uri'> - %H%H%H</span>",
-						js.nameOf(this._value), 
-						uri, root, selected);
+				if(isRoot) {
+					node.innerHTML = String.format(
+							"%H#%s<span class='uri'> - %H%H%H</span>",
+							uri, this._value.hashCode(), js.nameOf(this._value), 
+							root, selected);
+				} else {
+					node.innerHTML = String.format(
+							"%H<span class='uri'> - %H%H%H</span>",
+							js.nameOf(this._value), 
+							uri, root, selected);
+				}
 			}
 		},
 		statics: {

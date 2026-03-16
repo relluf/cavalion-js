@@ -309,12 +309,12 @@ const stringify = (obj) => {
 		 */
 		var s = [];
 		var idx = -1, pos = 0;
-		var i = 1;
+		var argi = 1;
 		var specifiers = "cdfsHn";
-
+	
 		do {
 			idx = fmt.indexOf("%", ++idx);
-
+	
 			if(idx !== -1) {
 				if(fmt.charAt(idx + 1) === "%") {
 					s.push(fmt.substring(pos, idx));
@@ -323,29 +323,45 @@ const stringify = (obj) => {
 					pos = idx + 1;
 				} else {
 					s.push(fmt.substring(pos, idx));
-					var mod = "", ch = fmt.charAt(idx + 1);
-					while(specifiers.indexOf(ch) === -1) {
+	
+					var mod = "";
+					var ch = fmt.charAt(idx + 1);
+	
+					while(specifiers.indexOf(ch) === -1 && ch !== "") {
 						mod += ch;
 						idx++;
 						ch = fmt.charAt(idx + 1);
 					}
+	
 					if(ch === "c") {
 						if(mod === "*") {
-							var n = arguments[i++];
+							var n = arguments[argi++];
 							while(n--) {
-								s.push(arguments[i]);
+								s.push(arguments[argi]);
 							}
-							i++;
+							argi++;
 						} else {
-							s.push(arguments[i++]);
+							s.push(arguments[argi++]);
 						}
+	
 					} else if(ch === "d") {
-						var value = "" + parseInt(arguments[i++], 10);
+						var n = parseInt(arguments[argi++], 10);
+						var value = "" + n;
+	
 						if(mod.length) {
+							var len;
+	
 							if(mod.charAt(0) === "0") {
-								var len = parseInt(mod.substring(1), 10) || 0;
-								while(value.length < len) {
-									value = "0" + value;
+								len = parseInt(mod.substring(1), 10) || 0;
+	
+								if(value.charAt(0) === "-") {
+									while(value.length < len) {
+										value = "-0" + value.substring(1);
+									}
+								} else {
+									while(value.length < len) {
+										value = "0" + value;
+									}
 								}
 							} else {
 								len = parseInt(mod, 10) || 0;
@@ -354,57 +370,98 @@ const stringify = (obj) => {
 								}
 							}
 						}
+	
 						s.push(value);
+	
 					} else if(ch === "f") {
-						mod = mod.split(".");
-						if(mod.length === 2) {
-	                        len = parseInt(mod[1], 10) || 0;
-	                        value = arguments[i++];
-	                        var i1 = String.format("%" + mod[0] + "d", value);
-	                        var f = Math.abs(value - i1);
-							f *= Math.pow(10, len + 1);
-							f = "" + Math.round(Math.round(f) / 10);
-							while(f.length < len) {
-							    f = "0" + f;
+						var parts = mod.split(".");
+						var raw = Number(arguments[argi++]);
+	
+						if(parts.length === 2 && !isNaN(raw)) {
+							var widthSpec = parts[0];
+							var precision = parseInt(parts[1], 10);
+							if(isNaN(precision)) {
+								precision = 0;
 							}
-	                        s.push(i1 + "." + f);
-	                    } else {
-	                        s.push(arguments[i++]);
-	                    }
-					} else if(ch === "s" || ch === "H" || ch === "n") {
-						if(ch === "n") {
-							value = String.of(arguments[i++]);
+	
+							var negative = raw < 0 || (raw === 0 && 1 / raw < 0);
+							var abs = Math.abs(raw);
+							var fixed = abs.toFixed(precision);
+							var out = negative ? "-" + fixed : fixed;
+	
+							if(widthSpec.length) {
+								var width;
+	
+								if(widthSpec.charAt(0) === "0") {
+									width = parseInt(widthSpec.substring(1), 10) || 0;
+	
+									if(out.charAt(0) === "-") {
+										while(out.length < width) {
+											out = "-0" + out.substring(1);
+										}
+									} else {
+										while(out.length < width) {
+											out = "0" + out;
+										}
+									}
+								} else {
+									width = parseInt(widthSpec, 10) || 0;
+									while(out.length < width) {
+										out = " " + out;
+									}
+								}
+							}
+	
+							s.push(out);
 						} else {
-							value = "" + arguments[i++];
+							s.push(arguments[argi - 1]);
 						}
+	
+					} else if(ch === "s" || ch === "H" || ch === "n") {
+						var value;
+						var len;
+	
+						if(ch === "n") {
+							value = String.of(arguments[argi++]);
+						} else {
+							value = "" + arguments[argi++];
+						}
+	
 						if(mod.charAt(0) === "-") {
 							len = parseInt(mod.substring(1), 10) || 0;
 							while(value.length < len) {
-								value = " " + value;
+								value += " ";
 							}
 						} else {
 							len = parseInt(mod, 10) || 0;
 							if(mod === "*") {
 								len = parseInt(value, 10);
-								value = "" + arguments[i++];
+								value = "" + arguments[argi++];
 							}
 							while(value.length < len) {
-								value += " ";
+								value = " " + value;
 							}
 						}
+	
 						if(ch === "H" && value) {
 							try {
 								value = String.escapeHtml(value);
-							} catch(e) { value = e.message; }
+							} catch(e) {
+								value = e.message;
+							}
 						}
+	
 						s.push(value);
+	
 					} else {
-						s.push(arguments[i++]);
+						s.push(arguments[argi++]);
 					}
+	
 					pos = idx + 2;
 				}
 			}
 		} while(idx !== -1);
+	
 		s.push(fmt.substring(pos));
 		return s.join("");
 	};
@@ -455,7 +512,9 @@ const stringify = (obj) => {
 			n = parseFloat(n);
 			
 			if((i = r.indexOf("0000")) > dot) {
-				return n.toFixed(i - dot - 1);
+				var t = n.toFixed(i - dot - 1);
+				if(t === "0" && n > 0) return n;
+				return t;
 			}
 			if((i = r.indexOf("9999")) > dot) {
 				return n.toFixed(i - dot - 1);

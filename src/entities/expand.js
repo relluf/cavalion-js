@@ -23,6 +23,7 @@ define(["js"], (js) => {
 		return expand.attributes4(this, arr);
 	};
 
+	const isFn = (f) => typeof f === "function";
 	const makeFn = (path) => {
 		/**
 		 * makeFn(path) -> function(as) { ... }
@@ -33,7 +34,7 @@ define(["js"], (js) => {
 		}
 		return fn;
 	};
-	const prefixId = (s) => !s ? "id" : s.startsWith("id") ? s : "id," + s;
+	const prefixId = (s) => !s ? "id" : s.startsWith("id") || s.startsWith("count:id") ? s : "id," + s;
 
 	function expand(expander, as, path) {
 		/**
@@ -77,7 +78,7 @@ define(["js"], (js) => {
 		// No path: just return the attribute as-is (e.g. root filter fields)
 		return attr;
 	}
-	expand.Entity = function(name, paths, joinToExpander) {
+	expand.newEntity = function(name, paths, joinToExpander) {
 		/**
 		 * expand.entity(name, paths, joinToExpander)
 		 *
@@ -112,11 +113,34 @@ define(["js"], (js) => {
 	};
 	expand.attributes4 = (entity, arr) => arr.map(a => {
 		if(a instanceof Array) {
+			if(!entity[a[0]]) { 
+				if(a.length === 1) {
+					return a[0] + ".id";
+				}
+				return prefixId(a[1]).split(",").map(s => a[0] + "." + s);
+			}
 			return entity[a[0]](prefixId(a[1]));
 		} else if(typeof a === "string") {
 			return prefixId(a).split(",");
 		}
 	}).flat();
 
-	return expand;
+	function DefaultEntity(name) {
+		this[KEY_name] = name;
+		this.join = (alias, attributes) => {
+			return attributes.split(",").map(a => [alias, a].join("."));
+		},
+		this.expand = (...args) => {
+			return args.map(a => {
+				if(a instanceof Array) {
+					const arr = prefixId(a[1]).split(",");
+					return arr.map(path => [a[0], path].join("."));
+				} else if(typeof a === "string") {
+					return prefixId(a).split(",");
+				}
+			});
+		}
+	}
+
+	return js.mi(expand, { DefaultEntity });
 });

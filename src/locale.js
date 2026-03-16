@@ -117,7 +117,7 @@ define(function(require) {
     		var arr = (window.locale.missing = (window.locale.missing || []));
     		arr.push(id);
         	// console.warn("undefined locale: " + id);
-        	r = "{" + id + "}";
+    		r = "{" + id + "}";
 		} else if(typeof r === "function" && r.name === "locale") {
 			/* automagically call functions named locale */		
 			r = r.apply(this, arguments);
@@ -172,11 +172,18 @@ define(function(require) {
     		} else {
     			args[0] = [prefix, id];
     		}
-    		return locale.apply(this, args);
+    		const r = locale.apply(this, args);
+    		if(typeof r === "string" && r.endsWith("}") && r.startsWith("{" + prefix)) {
+    			return "{" + r.substring(prefix.length + 1);
+    		}
+    		return r;
     	};
     	
     	prefixed.has = (id) => locale.has(prefix + id);
-    	
+    	prefixed.prefixed = (prefix2) => {
+    		return locale.prefixed(prefix + prefix2);
+    	};
+
     	return prefixed;
     };
 	locale.define = function(prefix, defaults) {

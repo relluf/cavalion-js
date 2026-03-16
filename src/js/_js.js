@@ -49,6 +49,7 @@ define(function(require) {
 		sj: serialize.serialize, //JSON.stringify,
 		pj: serialize.deserialize, //JSON.parse,
 		sf: String.format,
+		qq: (a, b) => (a === null || a === undefined) ? b : a,
 		eval: global[tlc("EVAL")],
 		nameOf: nameOf,
 		defineClass: defineClass,
