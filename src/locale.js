@@ -14,6 +14,10 @@ define(function(require) {
 	
 	// const trace = [];
 
+
+	function up(id) {
+		return id.replace(/[./\-\]]?[^./\-\]]*$/, "");
+	}
 	function locale(id) {
 		// if(typeof id === "string") trace.push(id);
 		
@@ -69,7 +73,13 @@ define(function(require) {
 				}
 				if(r.charAt(0) === ":" && r.charAt(1) === ":") {
 					try {
-						r = locale(r.substring(2));
+						if(r === "::") {
+							r = locale(up(id));
+						} else if(r.charAt(3) === ".") {
+							throw new Error("Not implemented yet"); // TODO
+						} else {
+							r = locale(r.substring(2));
+						}
 					} catch(e) {
 						r = "{" + r + "}: " + e.message;
 					}
