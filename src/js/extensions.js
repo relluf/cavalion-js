@@ -116,8 +116,7 @@ define(function(require) {
 		unique(item, index, array) { return array.indexOf(item) === index; },
 		// sort()
 	};
-	
-	
+
 	if (!Array.sortValues) {
 	
 		// Define priority for type-based sorting
@@ -467,6 +466,7 @@ const stringify = (obj) => {
 	};
 
 /*--- Math */
+/*--- Math */
 
 	// @see https://stackoverflow.com/questions/11695618/dealing-with-float-precision-in-javascript
 	var _cf = (
@@ -566,5 +566,9 @@ const stringify = (obj) => {
 		'YYYY/MM/DD': (dt, fmt) => js.sf("%d/%02d/%02d", 
 				dt.getFullYear(), dt.getMonth() + 1, dt.getDate())
 	};
-
+	
+	
+	fetch.text = (q, a) => fetch(q, a).then(res => res.text());	
+	fetch.json = (q, a) => fetch(q, a).then(res => res.json());
+	
 });

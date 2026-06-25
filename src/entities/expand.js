@@ -139,7 +139,7 @@ define(["js"], (js) => {
 					return prefixId(a).split(",");
 				}
 			});
-		}
+		};
 	}
 
 	return js.mi(expand, { DefaultEntity });
