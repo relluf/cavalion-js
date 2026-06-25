@@ -18,6 +18,23 @@ define(function(require) {
 	function up(id) {
 		return id.replace(/[./\-\]]?[^./\-\]]*$/, "");
 	}
+	function normalizePrefixes(prefix) {
+		return Array.isArray(prefix) ? prefix.slice() : [prefix];
+	}
+	function prefixedArgs(prefix, args) {
+		args = js.copy_args(args);
+		if(Array.isArray(args[0])) {
+			args[0] = args[0].slice();
+			args[0].unshift(prefix);
+			args[0] = [args[0].pop(), args[0].join("")].reverse();
+		} else {
+			args[0] = [prefix, args[0]];
+		}
+		return args;
+	}
+	function prefixedKey(args) {
+		return args[0].join("");
+	}
 	function locale(id) {
 		// if(typeof id === "string") trace.push(id);
 		
@@ -162,36 +179,43 @@ define(function(require) {
 	    return r;
     };
     locale.prefixed = function(prefix/*, defaults */) {
-    	if(prefix instanceof Array) {
-    		prefix = prefix[0];
-    	}
+    	const prefixes = normalizePrefixes(prefix);
+    	const primary = prefixes[0];
 
     	if(arguments.length > 1) {
-    		locale.define(prefix, arguments[1]);
+    		locale.define(primary, arguments[1]);
     	}
     	
     	const prefixed = function(id/*, ... */) {
     		if(arguments.length === 0) {
-    			return prefix;
+    			return prefixes.length === 1 ? primary : prefixes.slice();
     		}
     		
-    		var args = js.copy_args(arguments);
-    		if(args[0] instanceof Array) {
-    			args[0].unshift(prefix);
-    			args[0] = [args[0].pop(), args[0].join("")].reverse();
-    		} else {
-    			args[0] = [prefix, id];
-    		}
-    		const r = locale.apply(this, args);
-    		if(typeof r === "string" && r.endsWith("}") && r.startsWith("{" + prefix)) {
-    			return "{" + r.substring(prefix.length + 1);
-    		}
-    		return r;
+    		const baseId = Array.isArray(id) ? id.join("") : String(id);
+
+			for(let i = 0; i < prefixes.length; ++i) {
+				const args = prefixedArgs(prefixes[i], arguments);
+				const key = prefixedKey(args);
+	    		const r = locale.apply(this, args);
+	    		if(r !== "{" + key + "}") {
+	    			return r;
+	    		}
+	    		const missing = window.locale.missing;
+	    		if(missing instanceof Array && missing[missing.length - 1] === key) {
+	    			missing.pop();
+	    		}
+			}
+
+			(window.locale.missing = (window.locale.missing || [])).push(baseId);
+			return "{" + baseId + "}";
     	};
     	
-    	prefixed.has = (id) => locale.has(prefix + id);
+    	prefixed.has = (id) => prefixes.some(prefix => locale.has(prefix + id));
     	prefixed.prefixed = (prefix2) => {
-    		return locale.prefixed(prefix + prefix2);
+    		const prefixes2 = normalizePrefixes(prefix2);
+    		return locale.prefixed(prefixes.reduce((r, prefix) => {
+    			return r.concat(prefixes2.map(prefix2 => prefix + prefix2));
+    		}, []));
     	};
 
     	return prefixed;

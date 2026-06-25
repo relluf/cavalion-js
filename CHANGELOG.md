@@ -1,4 +1,40 @@
-### `2026/03/16` 1.0.85 Formatting and entity expansion updates
+Generate a git commit message, first line lowercased like: "(categorized): summary" , followed by bulleted phrases, starting with verbs like "Adds/Changes/Removes/Introduces/Refactors/Enhances/..."
+
+Generate a RELEASENOTES entry for users/developers of Cavalion
+
+### `2026/06/24` - 1.0.86 Queue and locale improved
+
+#### Queue throttling options
+
+- Adds object-style `Queue` constructor options.
+- Supports `new Queue({ concurrentLimit, interval })`.
+- Keeps positional `new Queue(concurrentLimit, opts)` usage.
+- Defaults `concurrentLimit` to `1` when omitted.
+- Adds `interval` to throttle task starts by minimum elapsed time.
+- Tracks pending throttle state with `timer`.
+- Tracks the previous task start with `lastStart`.
+- Refactors task scheduling into `next()`.
+- Adds `resolveIdle()` for centralized idle resolution.
+- Changes `add(fn)` to always enqueue tasks before scheduling.
+- Updates `whenIdle()` to wait for queued tasks, running tasks, and throttle timers.
+
+#### Locale prefix fallback support
+
+- Adds multi-prefix support to `locale.prefixed(prefix)`.
+- Accepts `prefix` as an array and preserves all prefixes instead of only using the first.
+- Adds fallback lookup across prefixes until a translation key resolves.
+- Keeps default definitions bound to the primary prefix via `locale.define(primary, defaults)`.
+- Changes zero-argument `prefixed()` to return all prefixes when multiple are configured.
+- Adds `normalizePrefixes()`, `prefixedArgs()`, and `prefixedKey()` helpers.
+- Improves missing-key handling by removing failed prefixed lookups from `window.locale.missing`.
+- Reports the original unprefixed `baseId` as missing when all prefixes fail.
+- Updates `prefixed.has(id)` to check all configured prefixes.
+- Updates nested `prefixed.prefixed(prefix2)` to compose all prefix combinations.
+- Preserves array-style locale IDs while applying prefix fallback.
+
+### `2026/03/16` - 1.0.85 Formatting and entity expansion updates
+
+Improves developer-facing formatting, entity expansion, and locale utilities across the codebase. It refines root component rendering in the console, adds safer defaults and fallback behavior for entity attribute expansion, introduces DefaultEntity, and extends low-level helpers such as js.qq(...). It also fixes several String.format() edge cases around numeric padding, float precision, malformed specifiers, and string alignment, while improving locale prefix composition and fallback placeholder handling. One API-level change is breaking: expand.Entity(...) is renamed to expand.newEntity(...).
 
 **console/node/vcl/Component.js**:
 
@@ -26,9 +62,9 @@
 
 * Adds `locale.prefixed(...).prefixed(...)` chaining in `src/locale.js`.
 * Fixes prefixed locale fallback output so missing keys do not duplicate the prefix.
+* Adds array-based prefix fallback support such as `locale.prefixed(["Timeline", "FilterMeting", "Meetpunt"])`.
 
-
-### `2026/02/05` Introducing entities.expand
+### `2026/02/05` - Introducing entities.expand
 
 It turns `expand.js` from a small “string builder” helper into a mini expansion/join framework.
 
@@ -158,7 +194,7 @@ Several core methods were changed and/or expanded:
 
 * Adds `js.waitAll()`
 
-### `2022/07/28` 10/29 -  1.0.71
+### `2022/07/28` `10/29` -  1.0.71
 
 * Adjusts/enhances `js.groupBy()` to use js.get(key,obj) in case obj doesn't have key
 * !!!???? Implements the support for falling back automatically ([CVLN-20220901-2-](/Dropbox-cavalion/Issues/:/))
